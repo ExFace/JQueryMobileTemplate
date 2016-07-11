@@ -13,7 +13,7 @@
 		"issues" : "https://github.com/exface/JQueryMobileTemplate/issues"
 	},
 	"require" : {
-		"exface/core" : "~1.0",
+		"exface/core" : ">=1.0",
 		"oomphinc/composer-installers-extender": "*",
 		"bower-asset/jquery": "1.8.x",
 		"bower-asset/jquery-mobile" : "~1.4.5",
