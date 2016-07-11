@@ -14,7 +14,7 @@
 	},
 	"require" : {
 		"exface/core" : "~1.0",
-		"bower-asset/jquery-1.8.x": "~1.8.x",
+		"bower-asset/jquery-1.8.x": "1.8.x",
 		"bower-asset/jquery-mobile" : "~1.4.5",
 		"bower-asset/masonry" : "~4",
 		"bower-asset/datatables.net" : "~1.10.12",
