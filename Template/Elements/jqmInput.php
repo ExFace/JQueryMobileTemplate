@@ -1,0 +1,25 @@
+<?php
+namespace exface\JQueryMobileTemplate\Template\Elements;
+class jqmInput extends jqmAbstractElement {
+	
+	protected $element_type = 'text';
+	
+function generate_html(){
+		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
+						<label for="' . $this->get_id() . '">' . $this->get_widget()->get_caption() . '</label>
+						<input data-clear-btn="true"
+								type="' . $this->get_element_type() . '"
+								name="' . $this->get_widget()->get_attribute_alias() . '" 
+								value="' . $this->escape_string($this->get_widget()->get_value()) . '" 
+								id="' . $this->get_id() . '"  
+								' . ($this->get_widget()->is_required() ? 'required="true" ' : '') . '
+								' . ($this->get_widget()->is_disabled() ? 'disabled="disabled" ' : '') . '/>
+					</div>';
+		return $output;
+	}
+	
+	function generate_js($jqm_page_id = null){
+		return '';
+	}
+}
+?>
