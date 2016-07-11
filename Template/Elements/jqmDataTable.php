@@ -459,14 +459,6 @@ JS;
 		//$includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables/media/js/jquery.dataTables.min.js"></script>';
 		$includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables.exface.helpers.js"></script>';
 		
-		if ($this->get_widget()->has_row_details()){
-			//$includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/jQueryMobile/extensions/datagridview/datagrid-detailview.js"></script>';
-		}
-		
-		/* IDEA The row groups get included always by the current template. Perhaps we need some way to allow manual includes in parallel with automatic ones
-		if ($this->get_widget()->has_row_groups()){
-			$includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/jQueryMobile/extensions/datagridview/datagrid-groupview.js"></script>';
-		}*/
 		return $includes;
 	}
 	
