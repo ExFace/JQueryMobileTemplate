@@ -171,7 +171,7 @@ abstract class jqmAbstractElement {
 	}
 
 	public function get_ajax_url() {
-		$request_id = $this->get_template()->exface()->get_request_id();
+		$request_id = $this->get_template()->get_workbench()->get_request_id();
 		return $this->ajax_url . ($request_id ? '&exfrid=' . $request_id : '');
 	}
 	

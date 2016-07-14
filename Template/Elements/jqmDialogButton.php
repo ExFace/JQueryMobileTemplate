@@ -2,7 +2,7 @@
 namespace exface\JQueryMobileTemplate\Template\Elements;
 /**
  * generates jEasyUI-Buttons for ExFace dialogs
- * @author aka
+ * @author Andrej Kabachnik
  *
  */
 class jqmDialogButton extends jqmButton {

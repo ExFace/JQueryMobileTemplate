@@ -3,7 +3,7 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 use exface\Core\Widgets\Button;
 /**
  * generates jQuery Mobile buttons for ExFace
- * @author aka
+ * @author Andrej Kabachnik
  *
  */
 class jqmMenuButton extends jqmAbstractElement {

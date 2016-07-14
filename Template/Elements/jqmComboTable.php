@@ -3,7 +3,7 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 /**
  * In jQuery Mobile a ComboTable is represented by a filterable UL-list. The code is based on the JQM-example below.
  * jqm example: http://demos.jquerymobile.com/1.4.5/listview-autocomplete-remote/
- * @author aka
+ * @author Andrej Kabachnik
  *
  */
 class jqmComboTable extends jqmInput {
