@@ -119,7 +119,7 @@ abstract class jqmAbstractElement {
 	 * @return string
 	 */
 	function get_id($exf_widget_id = null){
-		global $exface;
+		$exface = $this->get_template()->get_workbench();
 		return  $this->clean_id(($exf_widget_id ? $exf_widget_id : $this->get_widget()->get_id())) . '_' . $exface->get_request_id();
 	}
 	
@@ -137,8 +137,6 @@ abstract class jqmAbstractElement {
 	 * @return \exface\JQueryMobileTemplate\Template
 	 */
 	function get_template(){
-		/*global $exface;
-		return $exface->get_ui()->get_template('jQueryMobile');*/
 		return $this->template;
 	}
 	

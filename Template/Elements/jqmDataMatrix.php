@@ -51,7 +51,7 @@ class jqmDataMatrix extends jqmDataTable {
 	 * @see \exface\Templates\jeasyui\Widgets\grid::render_data_source()
 	 */
 	public function render_data_source(){
-		global $exface;
+		$exface = $this->get_template()->get_workbench();
 		/* @var $widget \exface\Core\Widgets\DataMatrix */
 		$widget = $this->get_widget();
 		$visible_columns = array();

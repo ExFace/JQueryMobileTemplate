@@ -62,7 +62,7 @@ class jqmButton extends jqmAbstractElement {
 	}
 
 	function generate_js_click_function(){
-		global $exface;
+		$exface = $this->get_template()->get_workbench();
 		$output = '';
 		/* @var $widget \exface\Core\Widgets\Button */
 		$widget = $this->get_widget();
