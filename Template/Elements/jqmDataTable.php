@@ -67,8 +67,8 @@ class jqmDataTable extends jqmAbstractElement {
 			$button_html .= $this->get_template()->get_element($more_buttons_menu)->generate_html();
 		}
 		
-		$bottom_toolbar = $this->generate_html_bottom_toolbar($button_html);
-		$top_toolbar = $widget->get_hide_toolbar_top() ? '' : $this->generate_html_top_toolbar();
+		$bottom_toolbar = $this->build_html_bottom_toolbar($button_html);
+		$top_toolbar = $widget->get_hide_toolbar_top() ? '' : $this->build_html_top_toolbar();
 		
 		// output the html code
 		// TODO replace "stripe" class by a custom css class
@@ -85,7 +85,7 @@ class jqmDataTable extends jqmAbstractElement {
 	</table>
 	{$bottom_toolbar}
 </div>
-{$this->generate_html_context_menu()}
+{$this->build_html_context_menu()}
 HTML;
 		
 		return $output;
@@ -134,7 +134,7 @@ HTML;
 		
 		// columns
 		foreach ($widget->get_columns() as $nr => $col){
-			$columns[] = $this->get_js_column_def($col);
+			$columns[] = $this->build_js_column_def($col);
 			$nr = $nr + $column_number_offset;
 			if ($col->get_footer()){
 				$footer_callback .= <<<JS
@@ -176,13 +176,13 @@ JS;
 				$fltr_element = $this->get_template()->get_element($fltr);
 				$filters_html .= $this->get_template()->generate_html($fltr);
 				$filters_js .= $this->get_template()->generate_js($fltr, $this->get_id().'_popup_config');
-				$filters_ajax .= 'd.fltr' . str_pad($fnr, 2, 0, STR_PAD_LEFT) . '_' . $fltr->get_attribute_alias() . ' = ' . $fltr_element->get_js_value_getter() . ";\n";
+				$filters_ajax .= 'd.fltr' . str_pad($fnr, 2, 0, STR_PAD_LEFT) . '_' . $fltr->get_attribute_alias() . ' = ' . $fltr_element->build_js_value_getter() . ";\n";
 				
 				// Here we generate some JS make the filter visible by default, once it gets used.
 				// This code will be called when the table's config page gets closed.
 				if (!$fltr->is_hidden()){
 					$filters_js_promoted .= "
-							if (" . $fltr_element->get_js_value_getter() . " && $('#" . $fltr_element->get_id() . "').parents('#{$this->get_id()}_popup_config').length > 0){
+							if (" . $fltr_element->build_js_value_getter() . " && $('#" . $fltr_element->get_id() . "').parents('#{$this->get_id()}_popup_config').length > 0){
 								var fltr = $('#" . $fltr_element->get_id() . "').parents('.exf_input');
 								var ui_block = $('<div></div>');
 								if ($('#{$this->get_id()}_filters_container').children('div').length % 2 == 0){
@@ -196,7 +196,7 @@ JS;
 							}
 					";
 					/*$filters_js_promoted .= "
-							if (" . $fltr_element->get_js_value_getter() . "){
+							if (" . $fltr_element->build_js_value_getter() . "){
 								var fltr = $('#" . $fltr_element->get_id() . "').parents('.exf_input');
 								var ui_block = $('<div></div>');
 								if ($('#{$this->get_id()}_filters_container').children('div').length % 2 == 0){
@@ -266,18 +266,18 @@ $(document).on('pageshow', '#{$this->get_jqm_page_id()}', function() {
 		"drawCallback": function(settings, json) {
 			{$this->get_id()}_drawPagination();
 			{$this->get_id()}_table.columns.adjust();
-			{$this->get_js_disable_text_selection()}
+			{$this->build_js_disable_text_selection()}
 		}
 		{$footer_callback}
 	} );
 	
-	{$this->get_js_pagination()}
+	{$this->build_js_pagination()}
 	
-	{$this->get_js_quicksearch()}
+	{$this->build_js_quicksearch()}
 	
-	{$this->get_js_row_selection()}
+	{$this->build_js_row_selection()}
 	
-	{$this->get_js_row_details()}
+	{$this->build_js_row_details()}
 
 } );
 	
@@ -377,7 +377,7 @@ JS;
 		return $output;
 	}
 	
-	public function get_js_column_def (\exface\Core\Widgets\DataColumn $col){
+	public function build_js_column_def (\exface\Core\Widgets\DataColumn $col){
 		$editor = $this->editors[$col->get_id()];
 	
 		$output = '{
@@ -386,7 +386,7 @@ JS;
 							//. ($col->get_colspan() ? ', colspan: "' . intval($col->get_colspan()) . '"' : '')
 							//. ($col->get_rowspan() ? ', rowspan: "' . intval($col->get_rowspan()) . '"' : '')
 							. ($col->is_hidden() ? ', visible: false' :  '')
-							//. ($editor ? ', editor: {type: "' . $editor->get_element_type() . '"' . ($editor->get_js_init_options() ? ', options: {' . $editor->get_js_init_options() . '}' : '') . '}' : '')
+							//. ($editor ? ', editor: {type: "' . $editor->get_element_type() . '"' . ($editor->build_js_init_options() ? ', options: {' . $editor->build_js_init_options() . '}' : '') . '}' : '')
 							. ', className: "' . $this->get_css_column_class($col) . '"'
 							. ', orderable: ' . ($col->get_sortable() ? 'true' : 'false')
 							. '}';
@@ -409,7 +409,7 @@ JS;
 		return $classes;
 	}
 	
-	public function get_js_edit_mode_enabler(){
+	public function build_js_edit_mode_enabler(){
 		return '
 					var rows = $(this).' . $this->get_element_type() . '("getRows");
 					for (var i=0; i<rows.length; i++){
@@ -426,7 +426,7 @@ JS;
 		return $this->on_load_success;
 	}
 	
-	public function get_js_value_getter($row=null, $column=null){
+	public function build_js_value_getter($row=null, $column=null){
 		$output = $this->get_id()."_table";
 		if (is_null($row)){
 			$output .= ".rows('.selected').data()";
@@ -441,7 +441,7 @@ JS;
 		return $output . "['" . $column . "']";
 	}
 	
-	public function get_js_data_getter(){
+	public function build_js_data_getter(){
 		if ($this->is_editable()){
 			// TODO
 		} else {
@@ -449,7 +449,7 @@ JS;
 		}
 	}
 	
-	public function get_js_refresh(){
+	public function build_js_refresh(){
 		return $this->get_id() . "_table.draw(false);";
 	}
 	
@@ -466,7 +466,7 @@ JS;
 	 * Renders javascript event handlers for tapping on rows. A single tap (or click) selects a row, while a longtap opens the
 	 * context menu for the row if one is defined. The long tap also selects the row.
 	 */
-	protected function get_js_row_selection(){
+	protected function build_js_row_selection(){
 		$output = '';		
 		if ($this->get_widget()->get_multi_select()){
 			$output .= "
@@ -506,13 +506,13 @@ JS;
 	 * This way, the user really only sees the buttons, that perform an action with the selected object and not those, that
 	 * do something with all object, create new objects, etc.
 	 */
-	private function generate_html_context_menu(){
+	private function build_html_context_menu(){
 		if (!$this->get_widget()->get_context_menu_enabled()) return '';
 		$buttons_html = '';
 		foreach ($this->get_widget()->get_buttons() as $b){
 			/* @var $b \exface\Core\Widgets\Button */
 			if (!$b->is_hidden() && (!$b->get_action() || $b->get_action()->get_input_rows_min() === 1)){
-				$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->get_template()->get_element($b)->generate_js_click_function_name() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
+				$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->get_template()->get_element($b)->build_js_click_function_name() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
 			}
 		}
 		
@@ -528,7 +528,7 @@ HTML;
 		return $output;
 	}
 	
-	protected function generate_html_top_toolbar(){
+	protected function build_html_top_toolbar(){
 		$table_caption = $this->get_widget()->get_caption() ? $this->get_widget()->get_caption() : $this->get_meta_object()->get_name();
 		
 		$output = <<<HTML
@@ -556,7 +556,7 @@ HTML;
 		return $output;
 	}
 	
-	protected function generate_html_bottom_toolbar($buttons_html){
+	protected function build_html_bottom_toolbar($buttons_html){
 		$output = <<<HTML
 		<div class="ui-bar ui-toolbar ui-bar-a tableFooter">
 		<div style="float:left" class="ui-alt-icon">{$buttons_html}</div>
@@ -582,7 +582,7 @@ HTML;
 		return $output;
 	}
 	
-	protected function get_js_pagination(){
+	protected function build_js_pagination(){
 		$output = <<<JS
 	$('#{$this->get_id()}_prevPage').on('click', function(){{$this->get_id()}_table.page('previous'); {$this->get_id()}_table.draw(false);});
 	$('#{$this->get_id()}_nextPage').on('click', function(){{$this->get_id()}_table.page('next'); {$this->get_id()}_table.draw(false);});
@@ -598,7 +598,7 @@ JS;
 		return $output;
 	}
 	
-	protected function get_js_quicksearch(){
+	protected function build_js_quicksearch(){
 		$output = <<<JS
 	$('#{$this->get_id()}_quickSearch_form').on('submit', function(event) {
 		{$this->get_id()}_table.draw();	
@@ -613,7 +613,7 @@ JS;
 		return $output;
 	}
 	
-	protected function get_js_row_details(){
+	protected function build_js_row_details(){
 		$output = '';
 		/* @var $widget \exface\Core\Widgets\DataTable */
 		$widget = $this->get_widget();
@@ -656,7 +656,7 @@ JS;
 	 * with the context menu being displayed. It look awful. 
 	 * @return string
 	 */
-	private function get_js_disable_text_selection(){
+	private function build_js_disable_text_selection(){
 		return "$('#{$this->get_id()} tbody tr td').attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);";
 	}
 	

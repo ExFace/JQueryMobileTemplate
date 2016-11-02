@@ -22,18 +22,18 @@ class jqmButton extends jqmAbstractElement {
 			$output .= $this->get_action()->print_helper_functions();
 		}
 		
-		if ($click = $this->generate_js_click_function()) {
+		if ($click = $this->build_js_click_function()) {
 			
 			// Generate the function to be called, when the button is clicked
 			$output .= "
-				function " . $this->generate_js_click_function_name() . "(input){
-					" . $this->generate_js_click_function() . "
+				function " . $this->build_js_click_function_name() . "(input){
+					" . $this->build_js_click_function() . "
 				}
 				";
 			
 			// Handle hotkeys
 			if ($this->get_widget()->get_hotkey()){
-				$hotkey_handlers[$this->get_widget()->get_hotkey()][] = $this->generate_js_click_function_name();
+				$hotkey_handlers[$this->get_widget()->get_hotkey()][] = $this->build_js_click_function_name();
 			}
 		}
 		
@@ -54,14 +54,14 @@ class jqmButton extends jqmAbstractElement {
 		$icon_classes = ($widget->get_icon_name() && !$widget->get_hide_button_icon() ? ' ui-icon-' . $this->get_icon_class($widget->get_icon_name()) : '') . ($widget->get_caption() && !$widget->get_hide_button_text() ? ' ui-btn-icon-left' : ' ui-btn-icon-notext');
 		$hidden_class = ($widget->is_hidden() ? ' exfHidden' : '');
 		$output = '
-				<a href="#" plain="true" ' . $this->generate_data_attributes() . ' class="ui-btn ui-btn-inline ui-corner-all' . $icon_classes . $hidden_class . '" onclick="' . $this->generate_js_click_function_name() . '();">
+				<a href="#" plain="true" ' . $this->generate_data_attributes() . ' class="ui-btn ui-btn-inline ui-corner-all' . $icon_classes . $hidden_class . '" onclick="' . $this->build_js_click_function_name() . '();">
 						' . $widget->get_caption() . '
 				</a>';
 
 		return $output;
 	}
 
-	function generate_js_click_function(){
+	function build_js_click_function(){
 		$exface = $this->get_template()->get_workbench();
 		$output = '';
 		/* @var $widget \exface\Core\Widgets\Button */
@@ -73,8 +73,8 @@ class jqmButton extends jqmAbstractElement {
 		// if the button does not have a action attached, just see if the attributes of the button
 		// will cause some click-behaviour and return the JS for that
 		if (!$action) {
-			$output .= $this->generate_js_close_dialog($widget, $input_element)
-			. $this->generate_js_input_refresh($widget, $input_element);
+			$output .= $this->build_js_close_dialog($widget, $input_element)
+			. $this->build_js_input_refresh($widget, $input_element);
 			return $output;
 		}
 		
@@ -95,7 +95,7 @@ class jqmButton extends jqmAbstractElement {
 		$js_requestData = "
 					var requestData = {};
 					requestData.oId = '" . $widget->get_meta_object_id() . "';
-					requestData.rows = Array.prototype.slice.call(" . $input_element->get_js_data_getter() . ");
+					requestData.rows = Array.prototype.slice.call(" . $input_element->build_js_data_getter() . ");
 					" . $js_check_input_rows;
 
 		if ($action->implements_interface('iRunTemplateScript')){
@@ -111,7 +111,7 @@ class jqmButton extends jqmAbstractElement {
 			/* @var $action \exface\Core\Interfaces\Actions\iShowUrl */
 			$output = $js_requestData . "
 					var " . $action->get_alias() . "Url='" . $action->get_url() . "';
-					" . $this->generate_js_placeholder_replacer($action->get_alias() . "Url", "requestData.rows[0]", $action->get_url(), ($action->get_urlencode_placeholders() ? 'encodeURIComponent' : null));
+					" . $this->build_js_placeholder_replacer($action->get_alias() . "Url", "requestData.rows[0]", $action->get_url(), ($action->get_urlencode_placeholders() ? 'encodeURIComponent' : null));
 			if ($action->get_open_in_new_window()){
 				$output .= "window.open(" . $action->get_alias() . "Url);";
 			} else {
@@ -133,7 +133,7 @@ class jqmButton extends jqmAbstractElement {
 					        data : postData,
 					        success:function(data, textStatus, jqXHR) 
 					        {
-					            " . $this->generate_js_close_dialog($widget, $input_element) . $this->generate_js_input_refresh($widget, $input_element) . "
+					            " . $this->build_js_close_dialog($widget, $input_element) . $this->build_js_input_refresh($widget, $input_element) . "
 		                       	$.mobile.loading('hide');
 					        },
 					        error: function(jqXHR, textStatus, errorThrown) 
@@ -156,7 +156,7 @@ class jqmButton extends jqmAbstractElement {
 								data: requestData
 							},
 							function(data) {
-								" . $this->generate_js_input_refresh($widget, $input_element) . "
+								" . $this->build_js_input_refresh($widget, $input_element) . "
 								$.mobile.loading('hide');
 							}
 						);";
@@ -173,18 +173,18 @@ class jqmButton extends jqmAbstractElement {
 		return $this->get_widget()->get_action();
 	}
 
-	protected function generate_js_input_refresh($widget, $input_element){
-		return ($widget->get_refresh_input() && $input_element->get_js_refresh() ? $input_element->get_js_refresh() . ";" : "");
+	protected function build_js_input_refresh($widget, $input_element){
+		return ($widget->get_refresh_input() && $input_element->build_js_refresh() ? $input_element->build_js_refresh() . ";" : "");
 	}
 
-	protected function generate_js_close_dialog($widget, $input_element){
+	protected function build_js_close_dialog($widget, $input_element){
 		return ($widget->get_widget_type() == 'DialogButton' && $widget->get_close_dialog_after_action_succeeds() ? "$('#" . $input_element->get_id() . "').dialog('close');" : "" );
 	}
 	
 	/**
 	 * Returns javascript code with global variables and functions needed for certain button types
 	 */
-	protected function generate_js_globals(){
+	protected function build_js_globals(){
 		$output = '';
 		/* Commented out because moved to generate_js()
 		// If the button reacts to any hotkey, we need to declare a global variable to collect keys pressed
@@ -206,7 +206,7 @@ class jqmButton extends jqmAbstractElement {
 		return $output;
 	}
 	
-	public function generate_js_click_function_name(){
+	public function build_js_click_function_name(){
 		return $this->get_function_prefix() . 'click';
 	}
 	
@@ -220,7 +220,7 @@ class jqmButton extends jqmAbstractElement {
 	 * @param string $js_sanitizer_function - a Javascript function to be applied to each value (e.g. encodeURIComponent) - without braces!!!
 	 * @return string - e.g. result = result.replace('[#placeholder#]', values['placeholder']);
 	 */
-	protected function generate_js_placeholder_replacer($js_var, $js_values_object, $string_with_placeholders, $js_sanitizer_function = null){
+	protected function build_js_placeholder_replacer($js_var, $js_values_object, $string_with_placeholders, $js_sanitizer_function = null){
 		$output = '';
 		$placeholders = $this->get_template()->get_workbench()->utils()->find_placeholders_in_string($string_with_placeholders);
 		foreach ($placeholders as $ph){

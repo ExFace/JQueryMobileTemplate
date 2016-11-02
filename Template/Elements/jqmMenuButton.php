@@ -14,7 +14,7 @@ class jqmMenuButton extends jqmAbstractElement {
 	function generate_html(){
 		$buttons_html = '';
 		foreach ($this->get_widget()->get_buttons() as $b){
-			$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->generate_js_button_function_name($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
+			$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->build_js_button_function_name($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
 		}
 		$icon_classes = ($this->get_widget()->get_icon_name() ? ' ui-icon-' . $this->get_icon_class($this->get_widget()->get_icon_name()) : '') . ($this->get_widget()->get_caption() ? '' : ' ui-btn-icon-notext');
 		
@@ -38,10 +38,10 @@ HTML;
 	function generate_js($jqm_page_id = null){
 		$output = '';
 		foreach ($this->get_widget()->get_buttons() as $b){
-			if ($click = $b->generate_js_click_function()) {
+			if ($click = $b->build_js_click_function()) {
 				$output .= "
-					function " . $this->generate_js_button_function_name($b) . "(){
-						" . $b->generate_js_click_function() . "
+					function " . $this->build_js_button_function_name($b) . "(){
+						" . $b->build_js_click_function() . "
 					}
 					";
 			}
@@ -49,8 +49,8 @@ HTML;
 		return $output;
 	}
 	
-	function generate_js_button_function_name(Button $button){
-		return $this->get_template()->get_element($button)->generate_js_click_function_name();
+	function build_js_button_function_name(Button $button){
+		return $this->get_template()->get_element($button)->build_js_click_function_name();
 	}
 }
 ?>

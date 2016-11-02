@@ -21,7 +21,7 @@ class jqmCheckBox extends jqmAbstractElement {
 		return '';
 	}
 	
-	function get_js_init_options(){
+	function build_js_init_options(){
 		$options = 'on: "&#10004;"'
 				. ', off: ""';
 		return $options;
