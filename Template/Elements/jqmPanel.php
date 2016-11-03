@@ -6,7 +6,7 @@ class jqmPanel extends jqmContainer {
 		$output = '
 				<div class="panel" 
 					title="' . $this->get_widget()->get_caption() . '">' . "\n";
-		$output .= $this->children_generate_html();			
+		$output .= $this->build_html_for_children();			
 		$output .= '</div>';
 		return $output;
 	}

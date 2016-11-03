@@ -9,7 +9,7 @@ class jqmForm extends jqmPanel {
 		}
 		
 		$output .= '<form id="' . $this->get_widget()->get_id() . '">';
-		$output .= $this->generate_widgets_html();					
+		$output .= $this->build_html_for_widgets();					
 		$output .= '</form>';
 		
 		return $output;
