@@ -460,7 +460,7 @@ JS;
 	}
 	
 	public function build_js_refresh(){
-		return $this->get_id() . "_table.draw(false); console.log(object_table);";
+		return $this->get_id() . "_table.draw(false);";
 	}
 	
 	public function generate_headers(){
