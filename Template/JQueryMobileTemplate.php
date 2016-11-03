@@ -75,7 +75,8 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate {
 	public function set_response_from_action(ActionInterface $action){
 		if ($action->implements_interface('iShowDialog')) {
 			// Perform the action and draw the result
-			return $this->get_element($action->get_dialog_widget())->generate_jqm_page();
+			$action->get_result();
+			return parent::set_response($this->get_element($action->get_dialog_widget())->generate_jqm_page());
 		} else {
 			return parent::set_response_from_action($action);
 		}

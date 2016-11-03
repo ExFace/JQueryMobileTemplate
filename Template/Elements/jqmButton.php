@@ -160,7 +160,7 @@ class jqmButton extends jqmAbstractElement {
 	}
 
 	protected function build_js_input_refresh($widget, $input_element){
-		return ($widget->get_refresh_input() && $input_element->build_js_refresh() ? $input_element->build_js_refresh() . ";" : "");
+		return ($widget->get_refresh_input() && $input_element->build_js_refresh() ? $input_element->build_js_refresh() : "");
 	}
 
 	protected function build_js_close_dialog($widget, $input_element){

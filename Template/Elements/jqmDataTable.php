@@ -460,7 +460,7 @@ JS;
 	}
 	
 	public function build_js_refresh(){
-		return $this->get_id() . "_table.draw(false);";
+		return $this->get_id() . "_table.draw(false); console.log(object_table);";
 	}
 	
 	public function generate_headers(){
@@ -550,7 +550,7 @@ HTML;
 				</div>
 				<div class="ui-block-b" style="float: right; text-align: right;">
 					<div data-role="controlgroup" data-type="horizontal" style="float: right;">
-						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->get_id()}_table.draw();return false;">Search</a>
+						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->build_js_refresh()} return false;">Search</a>
 						<a href="#{$this->get_id()}_popup_config" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
 					</div>
 					<div style="margin-right: 90px;">
@@ -577,7 +577,7 @@ HTML;
 				<a href="#" id="{$this->get_id()}_nextPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-forward ui-nodisc-icon ui-alt-icon">&gt;</a>
 			</div>
 			<div style="float:right;">
-				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->get_id()}_table.draw(false); return false;">Reload</a>
+				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->build_js_refresh()} return false;">Reload</a>
 				<a href="#{$this->get_id()}_popup_config" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
 			</div>
 			<div data-role="popup" id="{$this->get_id()}_pagingPopup" style="width:300px; padding:10px;">
@@ -594,8 +594,8 @@ HTML;
 	
 	protected function build_js_pagination(){
 		$output = <<<JS
-	$('#{$this->get_id()}_prevPage').on('click', function(){{$this->get_id()}_table.page('previous'); {$this->get_id()}_table.draw(false);});
-	$('#{$this->get_id()}_nextPage').on('click', function(){{$this->get_id()}_table.page('next'); {$this->get_id()}_table.draw(false);});
+	$('#{$this->get_id()}_prevPage').on('click', function(){{$this->get_id()}_table.page('previous'); {$this->build_js_refresh()}});
+	$('#{$this->get_id()}_nextPage').on('click', function(){{$this->get_id()}_table.page('next'); {$this->build_js_refresh()}});
 	
 	$('#{$this->get_id()}_pagingPopup').on('popupafteropen', function(){
 		$('#{$this->get_id()}_pageSlider').val({$this->get_id()}_table.page()+1).attr('max', {$this->get_id()}_table.page.info().pages).slider('refresh');
