@@ -2,9 +2,12 @@
 namespace exface\JQueryMobileTemplate\Template\Elements;
 class jqmInput extends jqmAbstractElement {
 	
-	protected $element_type = 'text';
+	protected function init(){
+		parent::init();
+		$this->set_element_type('text');
+	}
 	
-function generate_html(){
+	public function generate_html(){
 		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
 						<label for="' . $this->get_id() . '">' . $this->get_widget()->get_caption() . '</label>
 						<input data-clear-btn="true"
@@ -18,7 +21,7 @@ function generate_html(){
 		return $output;
 	}
 	
-	function generate_js($jqm_page_id = null){
+	public function generate_js($jqm_page_id = null){
 		return '';
 	}
 }

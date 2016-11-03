@@ -93,9 +93,7 @@ class jqmButton extends jqmAbstractElement {
 		}
 
 		$js_requestData = "
-					var requestData = {};
-					requestData.oId = '" . $widget->get_meta_object_id() . "';
-					requestData.rows = Array.prototype.slice.call(" . $input_element->build_js_data_getter() . ");
+					var requestData = " . $input_element->build_js_data_getter($action) . ";
 					" . $js_check_input_rows;
 
 		if ($action->implements_interface('iRunTemplateScript')){
@@ -122,44 +120,32 @@ class jqmButton extends jqmAbstractElement {
 				$output = $js_requestData . "
 				 	$.mobile.changePage('" . $this->get_template()->create_link_internal($action->get_page_id()) . "?prefill={\"meta_object_id\":\"" . $widget->get_meta_object_id() . "\",\"rows\":[{\"" . $widget->get_meta_object()->get_uid_alias() . "\":' + requestData.rows[0]." . $widget->get_meta_object()->get_uid_alias() . " + '}]}');";
 			}
-		} elseif ($action->implements_interface('iModifyData')) {
-			$output = " var form = $('#" . $input_element->get_id() . " form');
-						$.mobile.loading('show');
-					    var postData = form.serializeArray();
-					    $.ajax(
-					    {
-					        url : '" . $this->get_ajax_url() . "&resource=".$widget->get_page_id()."&element=".$widget->get_id()."&action=".$widget->get_action_alias() . "&object=" . $widget->get_meta_object_id() . "',
-					        type: 'POST',
-					        data : postData,
-					        success:function(data, textStatus, jqXHR) 
-					        {
-					            " . $this->build_js_close_dialog($widget, $input_element) . $this->build_js_input_refresh($widget, $input_element) . "
-		                       	$.mobile.loading('hide');
-					        },
-					        error: function(jqXHR, textStatus, errorThrown) 
-					        {
-					            $.mobile.loading('hide');
-			                    alert(jqXHR.responseText);      
-					        }
-					    });
-					    ";
 		} elseif ($action->implements_interface('iNavigate')){
 			$output = '$.mobile.back();';
 		} else {
 			$output = $js_requestData . "
-						$.mobile.loading('show');
-						$.post('" . $this->get_ajax_url() ."',
-							{	action: '".$widget->get_action_alias()."',
+						" . $input_element->build_js_busy_icon_show() . "
+						$.ajax({
+							url: '" . $this->get_ajax_url() ."',
+							type: 'POST',
+							data: {	
+								action: '".$widget->get_action_alias()."',
 								resource: '".$widget->get_page_id()."',
 								element: '".$widget->get_id()."',
 								object: '" . $widget->get_meta_object_id() . "',
 								data: requestData
 							},
-							function(data) {
+							success: function(data, textStatus, jqXHR) {
+								" . $this->build_js_close_dialog($widget, $input_element) . "
 								" . $this->build_js_input_refresh($widget, $input_element) . "
-								$.mobile.loading('hide');
-							}
-						);";
+								" . $input_element->build_js_busy_icon_hide() . "
+							},
+					        error: function(jqXHR, textStatus, errorThrown) 
+					        {
+					            " . $input_element->build_js_busy_icon_hide() . "
+			                    alert(jqXHR.responseText);      
+					        }
+						});";
 		}
 
 		return $output;
@@ -179,20 +165,6 @@ class jqmButton extends jqmAbstractElement {
 
 	protected function build_js_close_dialog($widget, $input_element){
 		return ($widget->get_widget_type() == 'DialogButton' && $widget->get_close_dialog_after_action_succeeds() ? "$('#" . $input_element->get_id() . "').dialog('close');" : "" );
-	}
-	
-	/**
-	 * Returns javascript code with global variables and functions needed for certain button types
-	 */
-	protected function build_js_globals(){
-		$output = '';
-		/* Commented out because moved to generate_js()
-		// If the button reacts to any hotkey, we need to declare a global variable to collect keys pressed
-		if ($this->get_widget()->get_hotkey() == 'any'){
-			$output .= 'var exfHotkeys = [];';
-		}
-		*/
-		return $output;
 	}
 	
 	protected function generate_data_attributes(){

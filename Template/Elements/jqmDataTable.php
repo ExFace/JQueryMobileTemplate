@@ -1,17 +1,19 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
+use exface\Core\Interfaces\Actions\ActionInterface;
+
 /**
  * 
  * @author PATRIOT
  *
  */
 class jqmDataTable extends jqmAbstractElement {
+	
 	private $on_load_success = '';
 	private $row_details_expand_icon = 'ui-icon-content-add-circle-outline';
 	private $row_details_collapse_icon = 'ui-icon-content-remove-circle-outline';
-
-	protected $editable = false;
-	protected $editors = array();
+	private $editable = false;
+	private $editors = array();
 	
 	function generate_html(){
 		/* @var $widget \exface\Core\Widgets\DataTable */
@@ -441,12 +443,20 @@ JS;
 		return $output . "['" . $column . "']";
 	}
 	
-	public function build_js_data_getter(){
-		if ($this->is_editable()){
+	public function build_js_data_getter(ActionInterface $action = null, $custom_body_js = null){
+		// If some other class extending from the DataTable took care of getting data, just use it's code.
+		if ($custom_body_js){
+			return parent::build_js_data_getter($action, $custom_body_js);
+		}
+	
+		if (is_null($action)){
+			$rows = $this->get_id() . "_table.rows().data()";
+		} elseif ($this->is_editable() && $action->implements_interface('iModifyData')){
 			// TODO
 		} else {
-			return $this->get_id() . "_table.rows('.selected').data()";
+			$rows = "Array.prototype.slice.call(" . $this->get_id() . "_table.rows('.selected').data())";
 		}
+		return parent::build_js_data_getter($action, "data.rows = " . $rows . ";");
 	}
 	
 	public function build_js_refresh(){

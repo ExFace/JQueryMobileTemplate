@@ -1,7 +1,11 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 class jqmCheckBox extends jqmAbstractElement {
-	protected $element_type = 'checkbox';
+	
+	protected function init(){
+		parent::init();
+		$this->set_element_type('checkbox');
+	}
 	
 	function generate_html(){
 		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
