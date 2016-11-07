@@ -368,7 +368,7 @@ $('body').append('\
 			</div>\
 \
 			<div style="text-align:right;" class="ui-alt-icon">\
-				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->get_icon_class('cancel')} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a><a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->get_icon_class('save')} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->get_id()}_table.draw();">OK</a>\
+				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->build_css_icon_class('cancel')} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a><a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->build_css_icon_class('save')} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->get_id()}_table.draw();">OK</a>\
 			</div>\
 \
 	</div><!-- /content -->\
@@ -522,7 +522,7 @@ JS;
 		foreach ($this->get_widget()->get_buttons() as $b){
 			/* @var $b \exface\Core\Widgets\Button */
 			if (!$b->is_hidden() && (!$b->get_action() || $b->get_action()->get_input_rows_min() === 1)){
-				$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->get_template()->get_element($b)->build_js_click_function_name() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
+				$buttons_html .= '<li data-icon="' . $this->build_css_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->get_template()->get_element($b)->build_js_click_function_name() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
 			}
 		}
 		

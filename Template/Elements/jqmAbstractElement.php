@@ -6,17 +6,6 @@ use exface\JQueryMobileTemplate\Template\JQueryMobileTemplate;
 abstract class jqmAbstractElement extends AbstractJqueryElement {
 	
 	private $jqm_page_id = null;
-	private $icon_classes = array(
-			'edit' => 'content-create',
-			'remove' => 'action-delete',
-			'add' => 'content-add',
-			'save' => 'action-done',
-			'cancel' => 'content-clear',
-			'relaod' => 'navigation-refresh',
-			'copy' => 'content-content-copy',
-			'more' => 'navigation-more-horiz',
-			'link' => 'action-input'
-	);
 	
 	public function build_js_init_options(){
 		return '';
@@ -92,14 +81,6 @@ abstract class jqmAbstractElement extends AbstractJqueryElement {
 	
 	public function set_jqm_page_id($value) {
 		$this->jqm_page_id = $value;
-	} 
-
-	public function get_icon_class($exf_icon_name){
-	if ($this->icon_classes[$exf_icon_name]){
-			return $this->icon_classes[$exf_icon_name];
-		} else {
-			return $exf_icon_name;
-		}
 	}
 	
 	public function build_js_busy_icon_show(){

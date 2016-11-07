@@ -8,7 +8,7 @@ class jqmCheckBox extends jqmAbstractElement {
 	}
 	
 	function generate_html(){
-		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
+		$output = '	<div class="fitem exf_input" title="' . $this->build_hint_text() . '">
 						<label>' . $this->get_widget()->get_caption() . '</label>
 						<input type="checkbox" value="1" 
 								form="" 

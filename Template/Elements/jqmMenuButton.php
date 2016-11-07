@@ -14,9 +14,9 @@ class jqmMenuButton extends jqmAbstractElement {
 	function generate_html(){
 		$buttons_html = '';
 		foreach ($this->get_widget()->get_buttons() as $b){
-			$buttons_html .= '<li data-icon="' . $this->get_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->build_js_button_function_name($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
+			$buttons_html .= '<li data-icon="' . $this->build_css_icon_class($b->get_icon_name()) . '"><a href="#" onclick="' . $this->build_js_button_function_name($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->get_caption() . '</a></li>';
 		}
-		$icon_classes = ($this->get_widget()->get_icon_name() ? ' ui-icon-' . $this->get_icon_class($this->get_widget()->get_icon_name()) : '') . ($this->get_widget()->get_caption() ? '' : ' ui-btn-icon-notext');
+		$icon_classes = ($this->get_widget()->get_icon_name() ? ' ui-icon-' . $this->build_css_icon_class($this->get_widget()->get_icon_name()) : '') . ($this->get_widget()->get_caption() ? '' : ' ui-btn-icon-notext');
 		
 		$output = <<<HTML
 

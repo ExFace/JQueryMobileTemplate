@@ -10,7 +10,7 @@ class jqmComboTable extends jqmInput {
 	private $min_chars_to_search = 1;
 	
 	function generate_html(){
-		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
+		$output = '	<div class="fitem exf_input" title="' . $this->build_hint_text() . '">
 						<label for="' . $this->get_id() . '">' . $this->get_widget()->get_caption() . '</label>
 						<input id="' . $this->get_id() . '_autocomplete_input"  data-type="search" placeholder="Suchen..." value="' . $this->get_widget()->get_value_text() . '" />
 						<input type="hidden"		

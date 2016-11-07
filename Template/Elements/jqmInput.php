@@ -8,7 +8,7 @@ class jqmInput extends jqmAbstractElement {
 	}
 	
 	public function generate_html(){
-		$output = '	<div class="fitem exf_input" title="' . $this->get_hint() . '">
+		$output = '	<div class="fitem exf_input" title="' . $this->build_hint_text() . '">
 						<label for="' . $this->get_id() . '">' . $this->get_widget()->get_caption() . '</label>
 						<input data-clear-btn="true"
 								type="' . $this->get_element_type() . '"
