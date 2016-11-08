@@ -19,7 +19,7 @@ class jqmPropertyTable extends jqmData {
 				if (is_array($widget->widget_options->filters)){
 	
 					foreach ($widget->widget_options->filters as $fltr){
-						$fltr_html .= '<div class="exf_input"><label>' . $fltr->caption . '</label><input id="fltr_' . $fltr->attribute_alias . '" class="easyui-validatebox"></div>';
+						$fltr_html .= '<div class="exf_input"><label>' . $fltr->get_caption() . '</label><input id="fltr_' . $fltr->attribute_alias . '" class="easyui-validatebox"></div>';
 	
 					}
 	
