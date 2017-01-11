@@ -29,13 +29,13 @@ class jqmDialog extends jqmPanel {
 	<div data-role="content">
 		{$this->build_html_for_widgets()}
 		<div class="dialogButtons ui-alt-icon">
-			{$this->generate_buttons_html()}
+			{$this->build_html_buttons()}
 		</div>
 	</div>
 	
 	<script type="text/javascript">
 		{$this->build_js_for_widgets($this->get_id())}
-		{$this->generate_buttons_js($this->get_id())}
+		{$this->build_js_buttons($this->get_id())}
 	</script>
 				
 </div>

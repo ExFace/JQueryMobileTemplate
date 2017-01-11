@@ -11,7 +11,7 @@ class jqmPanel extends jqmContainer {
 		return $output;
 	}
 	
-	function generate_buttons_html(){
+	function build_html_buttons(){
 		$output = '';
 		foreach ($this->get_widget()->get_buttons() as $btn){
 			$output .= $this->get_template()->generate_html($btn);
@@ -20,7 +20,7 @@ class jqmPanel extends jqmContainer {
 		return $output;
 	}
 	
-	function generate_buttons_js($jqm_page_id = null){
+	function build_js_buttons($jqm_page_id = null){
 		$output = '';
 		foreach ($this->get_widget()->get_buttons() as $btn){
 			$output .= $this->get_template()->generate_js($btn, $jqm_page_id);
