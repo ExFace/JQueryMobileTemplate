@@ -1,6 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 use exface\Core\Widgets\Button;
+use exface\AbstractAjaxTemplate\Template\Elements\JqueryButtonTrait;
 /**
  * generates jQuery Mobile buttons for ExFace
  * @author Andrej Kabachnik
@@ -8,6 +9,8 @@ use exface\Core\Widgets\Button;
  */
 class jqmMenuButton extends jqmAbstractElement {
 
+	use JqueryButtonTrait;
+	
 	/**
 	 * @see \exface\Templates\jeasyui\Widgets\abstractWidget::generate_html()
 	 */
