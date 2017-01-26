@@ -1,5 +1,5 @@
 	/**
-	 * @param nbNames: Kommaseparierte Liste mit den IDs der Inputboxen, für die das Keypad aktiviert werden soll.
+	 * @param nbNames: Kommaseparierte Liste mit den IDs der Inputboxen, fï¿½r die das Keypad aktiviert werden soll.
 	 */
 	function setNumberboxes(nbNames) {
 		var nbNamesArr = nbNames.split(",");
@@ -13,7 +13,7 @@
 	}
 	
 	/**
-	 * @param numberbox: Element für das Keypad aktiviert werden soll
+	 * @param numberbox: Element fï¿½r das Keypad aktiviert werden soll
 	 */
 	function setNumberbox(numberbox) {
 		numberbox.attr("readonly", true);
