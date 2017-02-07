@@ -1,5 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
+use exface\Core\Interfaces\Actions\ActionInterface;
+
 class jqmInput extends jqmAbstractElement {
 	
 	protected function init(){
@@ -23,6 +25,19 @@ class jqmInput extends jqmAbstractElement {
 	
 	public function generate_js($jqm_page_id = null){
 		return '';
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement::build_js_data_getter($action, $custom_body_js)
+	 */
+	public function build_js_data_getter(ActionInterface $action = null){
+		if ($this->get_widget()->is_readonly()){
+			return '{}';
+		} else {
+			return parent::build_js_data_getter($action);
+		}
 	}
 }
 ?>
