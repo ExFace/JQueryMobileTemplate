@@ -1,6 +1,8 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 use exface\Core\Interfaces\Actions\ActionInterface;
+use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTablesTrait;
+use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTableTrait;
 
 /**
  * 
@@ -9,11 +11,18 @@ use exface\Core\Interfaces\Actions\ActionInterface;
  */
 class jqmDataTable extends jqmAbstractElement {
 	
+	use JqueryDataTableTrait;
+	use JqueryDataTablesTrait;
+	
 	private $on_load_success = '';
-	private $row_details_expand_icon = 'ui-icon-content-add-circle-outline';
-	private $row_details_collapse_icon = 'ui-icon-content-remove-circle-outline';
 	private $editable = false;
 	private $editors = array();
+	
+	protected function init(){
+		parent::init();
+		$this->set_row_details_collapse_icon('ui-icon-content-remove-circle-outline');
+		$this->set_row_details_expand_icon('ui-icon-content-add-circle-outline');
+	}
 	
 	function generate_html(){
 		/* @var $widget \exface\Core\Widgets\DataTable */
@@ -615,44 +624,6 @@ JS;
 		{$this->get_id()}_table.draw();	
 	});
 JS;
-		return $output;
-	}
-	
-	protected function build_js_row_details(){
-		$output = '';
-		/* @var $widget \exface\Core\Widgets\DataTable */
-		$widget = $this->get_widget();
-		if ($widget->has_row_details()){
-			$output = <<<JS
-	// Add event listener for opening and closing details
-	$('#{$this->get_id()} tbody').on('click', 'td.details-control', function () {
-		var tr = $(this).closest('tr');
-		var row = {$this->get_id()}_table.row( tr );
-		
-		if ( row.child.isShown() ) {
-			// This row is already open - close it
-			row.child.hide();
-			tr.removeClass('shown');
-			tr.find('.{$this->row_details_collapse_icon}').removeClass('{$this->row_details_collapse_icon}').addClass('{$this->row_details_expand_icon}');
-			$('#detail'+row.data().id).remove();
-			{$this->get_id()}_table.columns.adjust();
-		}
-		else {
-			// Open this row
-			row.child('<div id="detail'+row.data().{$widget->get_meta_object()->get_uid_alias()}+'"></div>').show();
-			$.get('{$this->get_ajax_url()}&action={$widget->get_row_details_action()}&resource={$this->get_page_id()}&element={$widget->get_row_details_container()->get_id()}&prefill={"meta_object_id":"{$widget->get_meta_object_id()}","rows":[{"{$widget->get_meta_object()->get_uid_alias()}":' + row.data().{$widget->get_meta_object()->get_uid_alias()} + '}]}'+'&exfrid='+row.data().{$widget->get_meta_object()->get_uid_alias()}, 
-				function(data){
-					$('#detail'+row.data().{$widget->get_meta_object()->get_uid_alias()}).append(data).enhanceWithin();
-					{$this->get_id()}_table.columns.adjust();
-				}
-			);
-			tr.next().addClass('detailRow');
-			tr.addClass('shown');
-			tr.find('.{$this->row_details_expand_icon}').removeClass('{$this->row_details_expand_icon}').addClass('{$this->row_details_collapse_icon}');
-		}
-	} );
-JS;
-		}
 		return $output;
 	}
 	
