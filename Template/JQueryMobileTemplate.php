@@ -7,6 +7,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate {
 	protected $request_columns = array();
 
 	public function init(){
+		parent::init();
 		$this->set_class_prefix('jqm');
 		$this->set_class_namespace(__NAMESPACE__);
 	}
