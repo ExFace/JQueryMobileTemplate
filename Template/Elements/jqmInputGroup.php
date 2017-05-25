@@ -1,16 +1,19 @@
-<?php namespace exface\JQueryMobileTemplate\Template\Elements;
+<?php
+namespace exface\JQueryMobileTemplate\Template\Elements;
 
-class jqmInputGroup extends jqmPanel {
-	
-	public function generate_html(){
-		$children_html = $this->build_html_for_children();
-		
-		$output = '
+class jqmInputGroup extends jqmPanel
+{
+
+    public function generateHtml()
+    {
+        $children_html = $this->buildHtmlForChildren();
+        
+        $output = '
 				<fieldset class="exface_inputgroup">
-					<legend>'.$this->get_widget()->get_caption().'</legend>
-					'.$children_html.'
+					<legend>' . $this->getWidget()->getCaption() . '</legend>
+					' . $children_html . '
 				</fieldset>';
-		return $output;
-	}
+        return $output;
+    }
 }
 ?>

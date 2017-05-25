@@ -1,5 +1,6 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
-class jqmInputDate extends jqmInput {
-	
+
+class jqmInputDate extends jqmInput
+{
 }

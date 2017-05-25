@@ -1,43 +1,50 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
+
 use exface\Core\Interfaces\Actions\ActionInterface;
 
-class jqmInput extends jqmAbstractElement {
-	
-	protected function init(){
-		parent::init();
-		$this->set_element_type('text');
-	}
-	
-	public function generate_html(){
-		$output = '	<div class="fitem exf_input" title="' . $this->build_hint_text() . '">
-						<label for="' . $this->get_id() . '">' . $this->get_widget()->get_caption() . '</label>
+class jqmInput extends jqmAbstractElement
+{
+
+    protected function init()
+    {
+        parent::init();
+        $this->setElementType('text');
+    }
+
+    public function generateHtml()
+    {
+        $output = '	<div class="fitem exf_input" title="' . $this->buildHintText() . '">
+						<label for="' . $this->getId() . '">' . $this->getWidget()->getCaption() . '</label>
 						<input data-clear-btn="true"
-								type="' . $this->get_element_type() . '"
-								name="' . $this->get_widget()->get_attribute_alias() . '" 
-								value="' . $this->escape_string($this->get_widget()->get_value()) . '" 
-								id="' . $this->get_id() . '"  
-								' . ($this->get_widget()->is_required() ? 'required="true" ' : '') . '
-								' . ($this->get_widget()->is_disabled() ? 'disabled="disabled" ' : '') . '/>
+								type="' . $this->getElementType() . '"
+								name="' . $this->getWidget()->getAttributeAlias() . '" 
+								value="' . $this->escapeString($this->getWidget()->getValue()) . '" 
+								id="' . $this->getId() . '"  
+								' . ($this->getWidget()->isRequired() ? 'required="true" ' : '') . '
+								' . ($this->getWidget()->isDisabled() ? 'disabled="disabled" ' : '') . '/>
 					</div>';
-		return $output;
-	}
-	
-	public function generate_js($jqm_page_id = null){
-		return '';
-	}
-	
-	/**
-	 *
-	 * {@inheritDoc}
-	 * @see \exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement::build_js_data_getter($action, $custom_body_js)
-	 */
-	public function build_js_data_getter(ActionInterface $action = null){
-		if ($this->get_widget()->is_display_only()){
-			return '{}';
-		} else {
-			return parent::build_js_data_getter($action);
-		}
-	}
+        return $output;
+    }
+
+    public function generateJs($jqm_page_id = null)
+    {
+        return '';
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement::buildJsDataGetter($action, $custom_body_js)
+     */
+    public function buildJsDataGetter(ActionInterface $action = null)
+    {
+        if ($this->getWidget()->isDisplayOnly()) {
+            return '{}';
+        } else {
+            return parent::buildJsDataGetter($action);
+        }
+    }
 }
 ?>

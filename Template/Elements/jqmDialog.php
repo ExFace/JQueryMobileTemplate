@@ -1,46 +1,51 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
-class jqmDialog extends jqmPanel {
-	
-	function generate_html(){
-		/* @var $widget \exface\Core\Widgets\Dialog */
-		$widget = $this->get_widget();
-		if ($widget->get_lazy_loading()){
-			return '';
-		} else {
-			return $this->generate_jqm_page();
-		}
-	}
-	
-	function generate_js($jqm_page_id = null){
-		return '';
-	}
-	
-	public function generate_jqm_page(){
-		/* @var $widget \exface\Core\Widgets\Dialog */
-		$widget = $this->get_widget();
-		
-		$output = <<<HTML
-<div data-role="page" id="{$this->get_id()}" data-overlay-theme="b" data-dialog="true" data-close-btn="right">
+
+class jqmDialog extends jqmPanel
+{
+
+    function generateHtml()
+    {
+        /* @var $widget \exface\Core\Widgets\Dialog */
+        $widget = $this->getWidget();
+        if ($widget->getLazyLoading()) {
+            return '';
+        } else {
+            return $this->generateJqmPage();
+        }
+    }
+
+    function generateJs($jqm_page_id = null)
+    {
+        return '';
+    }
+
+    public function generateJqmPage()
+    {
+        /* @var $widget \exface\Core\Widgets\Dialog */
+        $widget = $this->getWidget();
+        
+        $output = <<<HTML
+<div data-role="page" id="{$this->getId()}" data-overlay-theme="b" data-dialog="true" data-close-btn="right">
 	<div data-role="header" class="ui-alt-icon">
-		<h1>{$widget->get_caption()}</h1>
+		<h1>{$widget->getCaption()}</h1>
 	</div>
 
 	<div data-role="content">
-		{$this->build_html_for_widgets()}
+		{$this->buildHtmlForWidgets()}
 		<div class="dialogButtons ui-alt-icon">
-			{$this->build_html_buttons()}
+			{$this->buildHtmlButtons()}
 		</div>
 	</div>
 	
 	<script type="text/javascript">
-		{$this->build_js_for_widgets($this->get_id())}
-		{$this->build_js_buttons($this->get_id())}
+		{$this->buildJsForWidgets($this->getId())}
+		{$this->buildJsButtons($this->getId())}
 	</script>
 				
 </div>
 HTML;
-		return $output;
-	}
+        return $output;
+    }
 }
 ?>

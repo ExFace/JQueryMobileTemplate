@@ -2,12 +2,11 @@
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
 /**
- * 
- * 
- * @author Andrej Kabachnik
  *
+ * @author Andrej Kabachnik
+ *        
  */
-class jqmForm extends jqmPanel {
-	
+class jqmForm extends jqmPanel
+{
 }
 ?>

@@ -1,8 +1,9 @@
-<?php namespace exface\JQueryMobileTemplate;
+<?php
+namespace exface\JQueryMobileTemplate;
 
 use exface\Core\CommonLogic\AbstractApp;
 
-class JQueryMobileTemplateApp extends AbstractApp {
-	
+class JQueryMobileTemplateApp extends AbstractApp
+{
 }
 ?>
