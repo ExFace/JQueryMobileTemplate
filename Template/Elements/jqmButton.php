@@ -5,6 +5,7 @@ use exface\Core\Widgets\DialogButton;
 use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\AbstractAjaxTemplate\Template\Elements\JqueryButtonTrait;
 use exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement;
+use exface\Core\Interfaces\Actions\iShowWidget;
 
 /**
  * generates jQuery Mobile buttons for ExFace
@@ -80,7 +81,7 @@ class jqmButton extends jqmAbstractElement
 					";
     }
 
-    protected function buildJsClickShowWidget(ActionInterface $action, AbstractJqueryElement $input_element)
+    protected function buildJsClickShowWidget(iShowWidget $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
         if ($action->getPageId() != $this->getPageId()) {
