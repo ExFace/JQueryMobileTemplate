@@ -41,7 +41,7 @@ HTML;
     }
 
     /**
-     * (non-PHPdoc)
+     * {@inheritdoc}
      *
      * @see \exface\JQueryMobileTemplate\Template\Elements\jqmAbstractElement::generateJs()
      */
