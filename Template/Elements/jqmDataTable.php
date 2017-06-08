@@ -245,7 +245,7 @@ JS;
         
         // configure pagination
         if ($widget->getPaginate()) {
-            $paging_options = '"pageLength": ' . $widget->getPaginateDefaultPageSize() . ',';
+            $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.DEFAULT_PAGE_SIZE')). ',';
         } else {
             $paging_options = '"paging": false,';
         }

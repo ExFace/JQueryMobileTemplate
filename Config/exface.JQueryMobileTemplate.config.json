@@ -8,14 +8,19 @@
 	"FORBIDDEN_CHARS_IN_FUNCTION_PREFIX": ["-", "."],
 	"DEFAULT_AJAX_URL": "exface/exface.php?exftpl=exface.JQueryMobileTemplate",
 	"DATAGRID_SHOW_FOOTER_BY_DEFAULT": false,
+	
+	"WIDGET.DATATABLE.PAGE_SIZE": 20,
+	"WIDGET.CHART.PAGE_SIZE": 20,
+	"WIDGET.DATALIST.PAGE_SIZE": 20,
+	
 	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "",
-	"ICON_CLASSES.EDIT": "content-create",
-	"ICON_CLASSES.REMOVE": "action-delete",
-	"ICON_CLASSES.ADD": "content-add",
-	"ICON_CLASSES.SAVE": "action-done",
-	"ICON_CLASSES.CANCEL": "content-clear",
-	"ICON_CLASSES.RELOAD": "navigation-refresh",
-	"ICON_CLASSES.COPY": "content-content-copy",
-	"ICON_CLASSES.MORE": "navigation-more-horiz",
-	"ICON_CLASSES.LINK": "action-input"
+    "ICON_CLASSES.EDIT": "content-create",
+    "ICON_CLASSES.REMOVE": "action-delete",
+    "ICON_CLASSES.ADD": "content-add",
+    "ICON_CLASSES.SAVE": "action-done",
+    "ICON_CLASSES.CANCEL": "content-clear",
+    "ICON_CLASSES.RELOAD": "navigation-refresh",
+    "ICON_CLASSES.COPY": "content-content-copy",
+    "ICON_CLASSES.MORE": "navigation-more-horiz",
+    "ICON_CLASSES.LINK": "action-input"
 }
