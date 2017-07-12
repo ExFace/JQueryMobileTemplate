@@ -86,7 +86,7 @@ class jqmDataTable extends jqmAbstractElement
         }
         
         $bottom_toolbar = $this->buildHtmlBottomToolbar($button_html);
-        $top_toolbar = $widget->getHideToolbarTop() ? '' : $this->buildHtmlTopToolbar();
+        $top_toolbar = $widget->getHideHeader() ? '' : $this->buildHtmlTopToolbar();
         
         // output the html code
         // TODO replace "stripe" class by a custom css class
@@ -455,7 +455,7 @@ JS;
         return $this->on_load_success;
     }
 
-    public function buildJsValueGetter($row = null, $column = null)
+    public function buildJsValueGetter($column = null, $row = null)
     {
         $output = $this->getId() . "_table";
         if (is_null($row)) {
