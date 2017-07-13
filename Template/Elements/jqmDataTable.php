@@ -4,6 +4,7 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTablesTrait;
 use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTableTrait;
+use exface\Core\CommonLogic\Constants\Icons;
 
 /**
  *
@@ -74,7 +75,7 @@ class jqmDataTable extends jqmAbstractElement
                 if (! $button->isHidden()) {
                     if (! $more_buttons_menu) {
                         $more_buttons_menu = $widget->getPage()->createWidget('MenuButton', $widget);
-                        $more_buttons_menu->setIconName('more');
+                        $more_buttons_menu->setIconName(Icons::ELLIPSIS_H);
                         $more_buttons_menu->setCaption('');
                     }
                     $more_buttons_menu->addButton($button);
@@ -388,7 +389,7 @@ $('body').append('\
 			</div>\
 \
 			<div style="text-align:right;" class="ui-alt-icon">\
-				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass('cancel')} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a><a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass('save')} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->getId()}_table.draw();">OK</a>\
+				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::TIMES)} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a><a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::CHECK)} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->getId()}_table.draw();">OK</a>\
 			</div>\
 \
 	</div><!-- /content -->\
