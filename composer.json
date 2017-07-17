@@ -18,5 +18,13 @@
 		"bower-asset/datatables.net" : "~1.10.12",
 		"bower-asset/datatables.net-dt" : "~1.10.12",
 		"npm-asset/screenfull" : "~3.0"
-	}
+	},
+    "autoload": {
+        "psr-4": { "exface\\JQueryMobileTemplate\\": "" },
+        "exclude-from-classmap": [
+            "/Config/",
+            "/Translations/",
+            "/Model/"
+        ]
+    }
 }
