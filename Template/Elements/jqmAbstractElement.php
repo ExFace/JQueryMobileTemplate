@@ -1,7 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
-use exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement;
 use exface\JQueryMobileTemplate\Template\JQueryMobileTemplate;
 
 abstract class jqmAbstractElement extends AbstractJqueryElement
@@ -60,7 +60,7 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
      *
      * {@inheritdoc}
      *
-     * @see \exface\AbstractAjaxTemplate\Template\Elements\AbstractJqueryElement::getTemplate()
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::getTemplate()
      * @return JQueryMobileTemplate
      */
     public function getTemplate()

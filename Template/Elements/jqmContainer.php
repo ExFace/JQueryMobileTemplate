@@ -1,7 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
-use exface\AbstractAjaxTemplate\Template\Elements\JqueryContainerTrait;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryContainerTrait;
 
 class jqmContainer extends jqmAbstractElement
 {

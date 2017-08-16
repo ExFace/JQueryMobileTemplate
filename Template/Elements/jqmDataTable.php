@@ -1,8 +1,8 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
-use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTablesTrait;
-use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTableTrait;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTablesTrait;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTableTrait;
 use exface\Core\CommonLogic\Constants\Icons;
 
 /**

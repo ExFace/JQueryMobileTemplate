@@ -2,7 +2,7 @@
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
 use exface\Core\Widgets\Button;
-use exface\AbstractAjaxTemplate\Template\Elements\JqueryButtonTrait;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
 
 /**
  * generates jQuery Mobile buttons for ExFace

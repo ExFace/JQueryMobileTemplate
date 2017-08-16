@@ -1,7 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template;
 
-use exface\AbstractAjaxTemplate\Template\AbstractAjaxTemplate;
+use exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate;
 use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\Core\Widgets\AbstractWidget;
 
@@ -84,7 +84,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
      * In jQuery mobile we need to do some custom handling for the output of ShowDialog-actions: it must be wrapped in a
      * JQM page.
      *
-     * @see \exface\AbstractAjaxTemplate\Template\AbstractAjaxTemplate::setResponseFromAction()
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate::setResponseFromAction()
      */
     public function setResponseFromAction(ActionInterface $action)
     {
