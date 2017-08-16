@@ -1,7 +1,6 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
-use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTablesTrait;
 use exface\AbstractAjaxTemplate\Template\Elements\JqueryDataTableTrait;
 use exface\Core\CommonLogic\Constants\Icons;
@@ -23,13 +22,6 @@ class jqmDataTable extends jqmAbstractElement
 
     private $editors = array();
 
-    protected function init()
-    {
-        parent::init();
-        $this->setRowDetailsCollapseIcon('ui-icon-content-remove-circle-outline');
-        $this->setRowDetailsExpandIcon('ui-icon-content-add-circle-outline');
-    }
-
     function generateHtml()
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
@@ -48,15 +40,6 @@ class jqmDataTable extends jqmAbstractElement
             $thead = '<th></th>' . $thead;
             if ($tfoot) {
                 $tfoot = '<th></th>' . $tfoot;
-            }
-        }
-        
-        // Add promoted filters above the panel. Other filters will be displayed in a popup via JS
-        if ($widget->hasFilters()) {
-            foreach ($widget->getFilters() as $fltr) {
-                if ($fltr->getVisibility() !== EXF_WIDGET_VISIBILITY_PROMOTED)
-                    continue;
-                $filters_html .= $this->getTemplate()->generateHtml($fltr);
             }
         }
         
@@ -86,8 +69,8 @@ class jqmDataTable extends jqmAbstractElement
             $button_html .= $this->getTemplate()->getElement($more_buttons_menu)->generateHtml();
         }
         
-        $bottom_toolbar = $this->buildHtmlBottomToolbar($button_html);
-        $top_toolbar = $widget->getHideHeader() ? '' : $this->buildHtmlTopToolbar();
+        $bottom_toolbar = $this->buildHtmlFooter($button_html);
+        $top_toolbar = $widget->getHideHeader() ? '' : $this->buildHtmlHeader();
         
         // output the html code
         // TODO replace "stripe" class by a custom css class
@@ -273,17 +256,10 @@ $(document).on('pageshow', '#{$this->getJqmPageId()}', function() {
 		{$paging_options}
 		"scrollX": true,
 		"scrollXollapse": true,
-		"ajax": {
-			"url": "{$this->getAjaxUrl()}",
-			"type": "POST",
-			"data": function ( d ) {
-				d.action = '{$widget->getLazyLoadingAction()}';
-				d.resource = "{$this->getPageId()}";
-				d.element = "{$widget->getId()}";
-				d.object = "{$this->getWidget()->getMetaObject()->getId()}";
-				{$filters_ajax}
-			}
-		},
+		{$this->buildJsDataSource($filters_ajax)}
+		"language": {
+            "zeroRecords": "{$widget->getEmptyText()}"
+        }
 		"columns": [{$columns}],
 		"order": [{$default_sorters}],
 		"drawCallback": function(settings, json) {
@@ -400,95 +376,6 @@ JS;
         return $output;
     }
 
-    public function buildJsColumnDef(\exface\Core\Widgets\DataColumn $col)
-    {
-        $editor = $this->editors[$col->getId()];
-        
-        $output = '{
-							name: "' . $col->getDataColumnName() . '"' . ($col->getAttributeAlias() ? ', data: "' . $col->getDataColumnName() . '"' : '') . 
-        // . ($col->get_colspan() ? ', colspan: "' . intval($col->get_colspan()) . '"' : '')
-        // . ($col->get_rowspan() ? ', rowspan: "' . intval($col->get_rowspan()) . '"' : '')
-        ($col->isHidden() ? ', visible: false' : '') . 
-        // . ($editor ? ', editor: {type: "' . $editor->getElementType() . '"' . ($editor->buildJsInitOptions() ? ', options: {' . $editor->buildJsInitOptions() . '}' : '') . '}' : '')
-        ', className: "' . $this->getCssColumnClass($col) . '"' . ', orderable: ' . ($col->getSortable() ? 'true' : 'false') . '}';
-        
-        return $output;
-    }
-
-    /**
-     * Returns a list of CSS classes to be used for the specified column: e.g.
-     * alignment, etc.
-     *
-     * @param \exface\Core\Widgets\DataColumn $col            
-     * @return string
-     */
-    public function getCssColumnClass(\exface\Core\Widgets\DataColumn $col)
-    {
-        $classes = '';
-        switch ($col->getAlign()) {
-            case EXF_ALIGN_LEFT:
-                $classes .= 'dt-body-left';
-            case EXF_ALIGN_CENTER:
-                $classes .= 'dt-body-center';
-            case EXF_ALIGN_RIGHT:
-                $classes .= 'dt-body-right';
-        }
-        return $classes;
-    }
-
-    public function buildJsEditModeEnabler()
-    {
-        return '
-					var rows = $(this).' . $this->getElementType() . '("getRows");
-					for (var i=0; i<rows.length; i++){
-						$(this).' . $this->getElementType() . '("beginEdit", i);
-					}
-				';
-    }
-
-    public function addOnLoadSuccess($script)
-    {
-        $this->on_load_success .= $script;
-    }
-
-    public function getOnLoadSuccess()
-    {
-        return $this->on_load_success;
-    }
-
-    public function buildJsValueGetter($column = null, $row = null)
-    {
-        $output = $this->getId() . "_table";
-        if (is_null($row)) {
-            $output .= ".rows('.selected').data()";
-        } else {
-            // TODO
-        }
-        if (is_null($column)) {
-            $column = $this->getWidget()->getMetaObject()->getUidAlias();
-        } else {
-            // TODO
-        }
-        return $output . "['" . $column . "']";
-    }
-
-    public function buildJsDataGetter(ActionInterface $action = null)
-    {
-        if (is_null($action)) {
-            $rows = $this->getId() . "_table.rows().data()";
-        } elseif ($this->isEditable() && $action->implementsInterface('iModifyData')) {
-            // TODO
-        } else {
-            $rows = "Array.prototype.slice.call(" . $this->getId() . "_table.rows('.selected').data())";
-        }
-        return "{oId: '" . $this->getWidget()->getMetaObjectId() . "', rows: " . $rows . "}";
-    }
-
-    public function buildJsRefresh()
-    {
-        return $this->getId() . "_table.draw(false);";
-    }
-
     public function generateHeaders()
     {
         $includes = array();
@@ -570,7 +457,7 @@ HTML;
         return $output;
     }
 
-    protected function buildHtmlTopToolbar()
+    protected function buildHtmlHeader()
     {
         $table_caption = $this->getWidget()->getCaption() ? $this->getWidget()->getCaption() : $this->getMetaObject()->getName();
         
@@ -599,7 +486,7 @@ HTML;
         return $output;
     }
 
-    protected function buildHtmlBottomToolbar($buttons_html)
+    protected function buildHtmlFooter($buttons_html)
     {
         $output = <<<HTML
 		<div class="ui-bar ui-toolbar ui-bar-a tableFooter">
@@ -643,22 +530,6 @@ JS;
         return $output;
     }
 
-    protected function buildJsQuicksearch()
-    {
-        $output = <<<JS
-	$('#{$this->getId()}_quickSearch_form').on('submit', function(event) {
-		{$this->getId()}_table.draw();	
-		event.preventDefault();
-		return false;
-	});
-				
-	$('#{$this->getId()}_quickSearch').on('change', function(event) {
-		{$this->getId()}_table.draw();	
-	});
-JS;
-        return $output;
-    }
-
     /**
      * Generates JS to disable text selection on the rows of the table.
      * If not done so, every time you longtap a row, something gets selected along
@@ -684,6 +555,16 @@ JS;
     public function getEditors()
     {
         return $this->editors;
+    }
+    
+    public function getRowDetailsExpandIcon()
+    {
+        return 'ui-icon-content-add-circle-outline';
+    }
+    
+    public function getRowDetailsCollapseIcon()
+    {
+        return 'ui-icon-content-remove-circle-outline';
     }
 }
 ?>
