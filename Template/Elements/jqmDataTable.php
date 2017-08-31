@@ -113,7 +113,7 @@ HTML;
 						"class":          "details-control",
 						"orderable":      false,
 						"data":           null,
-						"defaultContent": \'<a class="ui-collapsible-heading ui-collapsible-heading-collapsed ' . $this->row_details_expand_icon . ' ui-btn-icon-notext" href="javascript:;"></a>\'
+						"defaultContent": \'<a class="ui-collapsible-heading ui-collapsible-heading-collapsed ' . $this->getRowDetailsExpandIcon() . ' ui-btn-icon-notext" href="javascript:;"></a>\'
 					}
 					';
             $column_number_offset ++;
@@ -229,7 +229,7 @@ JS;
         
         // configure pagination
         if ($widget->getPaginate()) {
-            $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.DEFAULT_PAGE_SIZE')). ',';
+            $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.PAGE_SIZE')). ',';
         } else {
             $paging_options = '"paging": false,';
         }
@@ -259,13 +259,14 @@ $(document).on('pageshow', '#{$this->getJqmPageId()}', function() {
 		{$this->buildJsDataSource($filters_ajax)}
 		"language": {
             "zeroRecords": "{$widget->getEmptyText()}"
-        }
+        },
 		"columns": [{$columns}],
 		"order": [{$default_sorters}],
 		"drawCallback": function(settings, json) {
 			{$this->getId()}_drawPagination();
 			{$this->getId()}_table.columns.adjust();
 			{$this->buildJsDisableTextSelection()}
+			{$this->buildJsBusyIconHide()}
 		}
 		{$footer_callback}
 	} );
@@ -565,6 +566,11 @@ JS;
     public function getRowDetailsCollapseIcon()
     {
         return 'ui-icon-content-remove-circle-outline';
+    }
+    
+    public function buildJsFilterIndicatorUpdater()
+    {
+        // TODO
     }
 }
 ?>

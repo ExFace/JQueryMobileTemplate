@@ -9,10 +9,6 @@
 	"DEFAULT_AJAX_URL": "exface/exface.php?exftpl=exface.JQueryMobileTemplate",
 	"DATAGRID_SHOW_FOOTER_BY_DEFAULT": false,
 	
-	"WIDGET.DATATABLE.PAGE_SIZE": 20,
-	"WIDGET.CHART.PAGE_SIZE": 20,
-	"WIDGET.DATALIST.PAGE_SIZE": 20,
-	
 	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "",
     "ICON_CLASSES.EDIT": "content-create",
     "ICON_CLASSES.REMOVE": "action-delete",
@@ -22,5 +18,23 @@
     "ICON_CLASSES.RELOAD": "navigation-refresh",
     "ICON_CLASSES.COPY": "content-content-copy",
     "ICON_CLASSES.MORE": "navigation-more-horiz",
-    "ICON_CLASSES.LINK": "action-input"
+    "ICON_CLASSES.LINK": "action-input",
+    
+    "WIDGET.ALL.DEFAULT_ALIGNMENT": "left",
+	
+	"WIDGET.CHART.PAGE_SIZE": 20,
+    
+	"WIDGET.DATACONFIGURATOR.COLUMNS_BY_DEFAULT": 1,
+    
+    "WIDGET.DATALIST.PAGE_SIZE": 20,
+	
+	"WIDGET.DATATABLE.PAGE_SIZE": 20,
+    
+    "WIDGET.DIALOG.COLUMNS_BY_DEFAULT": 2,
+    
+    "WIDGET.PANEL.COLUMNS_BY_DEFAULT": 3,
+    
+    "WIDGET.TABS.COLUMNS_BY_DEFAULT": 3,
+    
+    "JAVASCRIPT_DEBUG_LEVEL": 0
 }
