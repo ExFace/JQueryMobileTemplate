@@ -50,7 +50,7 @@ $(document).on('pagecreate', '#{$jqm_page_id}', function() {
                 dataType: "json",
                 data: {
                 	action: "{$widget->getLazyLoadingAction()}",
-                	resource: "{$this->getPageId()}",
+                	resource: "{$this->getPageAlias()}",
 					element: "{$widget->getTable()->getId()}",
 					object: "{$widget->getTable()->getMetaObject()->getId()}",
                     q: input.val()

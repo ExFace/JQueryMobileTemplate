@@ -28,14 +28,14 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
         return $instance->generateJs($jqm_page_id);
     }
 
-    public function processRequest($page_id = NULL, $widget_id = NULL, $action_alias = NULL, $disable_error_handling = NULL)
+    public function processRequest($page_alias = NULL, $widget_id = NULL, $action_alias = NULL, $disable_error_handling = NULL)
     {
         $this->request_columns = $this->getWorkbench()->getRequestParams()['columns'];
         $this->getWorkbench()->removeRequestParam('columns');
         $this->getWorkbench()->removeRequestParam('search');
         $this->getWorkbench()->removeRequestParam('draw');
         $this->getWorkbench()->removeRequestParam('_');
-        return parent::processRequest($page_id, $widget_id, $action_alias, $disable_error_handling);
+        return parent::processRequest($page_alias, $widget_id, $action_alias, $disable_error_handling);
     }
 
     public function getRequestPagingOffset()
