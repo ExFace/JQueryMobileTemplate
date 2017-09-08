@@ -57,10 +57,10 @@ $(document).on('pagecreate', '#{$jqm_page_id}', function() {
                 },
 				success: function ( response ) {
 					$.each( response.data, function ( i, val ) {
-	                    html += '<li><a href="#" exf-value="' + val.{$widget->getTable()->getMetaObject()->getUidAlias()} + '">' + val.{$widget->getTable()->getMetaObject()->getLabelAlias()} + '</a></li>';
+	                    html += '<li><a href="#" exf-value="' + val.{$widget->getTable()->getMetaObject()->getUidAttributeAlias()} + '">' + val.{$widget->getTable()->getMetaObject()->getLabelAttributeAlias()} + '</a></li>';
 	                	if (response.data.length == 1){
-	                		$('#{$this->getId()}').val(val.{$widget->getTable()->getMetaObject()->getUidAlias()});
-	                		$("#{$this->getId()}_autocomplete_input").val(val.{$widget->getTable()->getMetaObject()->getLabelAlias()});
+	                		$('#{$this->getId()}').val(val.{$widget->getTable()->getMetaObject()->getUidAttributeAlias()});
+	                		$("#{$this->getId()}_autocomplete_input").val(val.{$widget->getTable()->getMetaObject()->getLabelAttributeAlias()});
                 		}
 					});
 	                ul.html( html );
