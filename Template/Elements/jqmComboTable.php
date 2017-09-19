@@ -36,6 +36,9 @@ class jqmComboTable extends jqmInput
     {
         /* @var $widget \exface\Core\Widgets\ComboTable */
         $widget = $this->getWidget();
+        
+        $jqm_page_id = ! is_null($jqm_page_id) ? $jqm_page_id : $this->getPageId();
+        
         $output = <<<JS
 		
 $(document).on('pagecreate', '#{$jqm_page_id}', function() {
