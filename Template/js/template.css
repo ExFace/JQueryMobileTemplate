@@ -1,2 +1,7 @@
+/* General */
+.text-right {text-align: right;}
+.text-left {text-align: left;}
+.text-center {text-align: center;}
+
 /* Inputs */
 .exface_inputgroup {border-width: 1px 0 0 0 !important; padding: 10px 0 20px 0 !important;}
