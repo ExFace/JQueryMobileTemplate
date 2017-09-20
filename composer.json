@@ -17,7 +17,8 @@
 		"bower-asset/masonry" : "~4",
 		"bower-asset/datatables.net" : "~1.10.12",
 		"bower-asset/datatables.net-dt" : "~1.10.12",
-		"npm-asset/screenfull" : "~3.0"
+		"npm-asset/screenfull" : "~3.0",
+		"bower-asset/nativeDroid2": "^2.0.3"
 	},
     "autoload": {
         "psr-4": { "exface\\JQueryMobileTemplate\\": "" },
