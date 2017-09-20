@@ -186,22 +186,9 @@ HTML;
     			</div>
     			<div class="ui-block-b">
                     <form id="{$this->getId()}_quickSearch_form">
-        				<!--
-                        <div data-role="controlgroup" data-type="horizontal">
-        					<a href="#" data-role="button" class="ui-btn" onclick="{$this->buildJsRefresh(false)} return false;"><i class="fa fa-search"></i></a>
-        					<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" class="ui-btn"><i class="fa fa-filter"></i></a>
-        				</div>
-                        
-        				<div style="margin-right: 90px;">
-        					<input id="{$this->getId()}_quickSearch" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
-        				</div>
-                        -->
-                        <!--<div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset ui-input-has-clear">
-                    	   <input id="{$this->getId()}_quickSearch" type="text" placeholder="Quick search" data-role="none" />
-                        </div>-->
                         <div class="ui-grid-a pull-right" style="width: 100%">
                             <div class="ui-block-a" style="width: calc(100% - 130px); margin-right: 10px;">
-        				        <input id="{$this->getId()}_quickSearch" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
+        				        <input id="{$this->getId()}_quickSearch" type="text" placeholder="{$this->getQuickSearchPlaceholder()}" data-clear-btn="true" />
                             </div>
                             <div class="ui-block-b" style="width: 120px;">
                                 <a href="#" data-role="button" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;"><i class="fa fa-search"></i></a>
