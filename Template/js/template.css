@@ -18,6 +18,9 @@ table.dataTable.no-footer {border-bottom: none !important;}
 .dataTables_wrapper.no-footer .dataTables_scrollBody, table.dataTable thead th, table.dataTable thead td {border-bottom: 1px solid rgba(0,0,0,.12)}
 .tableFooter {padding: 5px 0}
 
+/* Tabs */
+ul.nd2Tabs {margin-left: 20px !important;} 
+
 /* nativeDroid2 cards */
 .nd2-card {max-width: none !important;}
 
