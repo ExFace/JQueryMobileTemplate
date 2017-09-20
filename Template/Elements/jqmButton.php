@@ -6,9 +6,12 @@ use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement;
 use exface\Core\Interfaces\Actions\iShowWidget;
+use exface\Core\Widgets\Button;
 
 /**
  * generates jQuery Mobile buttons for ExFace
+ * 
+ * @method Button getWidget()
  *
  * @author Andrej Kabachnik
  *        
@@ -52,19 +55,19 @@ class jqmButton extends jqmAbstractElement
     }
 
     /**
-     *
-     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::generateHtml()
+     * 
+     * {@inheritDoc}
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::generateHtml()
      */
     function generateHtml()
     {
-        $action = $this->getAction();
         /* @var $widget \exface\Core\Widgets\Button */
         $widget = $this->getWidget();
-        $icon_classes = ($widget->getIconName() && ! $widget->getHideButtonIcon() ? ' ui-icon-' . $this->buildCssIconClass($widget->getIconName()) : '') . ($widget->getCaption() && ! $widget->getHideButtonText() ? ' ui-btn-icon-left' : ' ui-btn-icon-notext');
-        $hidden_class = ($widget->isHidden() ? ' exfHidden' : '');
+        $icon = ($widget->getIconName() && ! $widget->getHideButtonIcon() ? '<i class="' . ($widget->getCaption() && ! $widget->getHideButtonText() ? 'ui-pull-left ' : '') . $this->buildCssIconClass($widget->getIconName() . '"></i> ') : '');
+        $hidden_class = ($widget->isHidden() ? ' ui-hidden' : '');
         $output = '
-				<a href="#" plain="true" ' . $this->generateDataAttributes() . ' class="ui-btn ui-btn-inline ui-corner-all' . $icon_classes . $hidden_class . '" onclick="' . $this->buildJsClickFunctionName() . '();">
-						' . $widget->getCaption() . '
+				<a href="#" ' . $this->generateDataAttributes() . ' class="ui-btn ui-btn-inline ' . $hidden_class . '" onclick="' . $this->buildJsClickFunctionName() . '();">
+						' . $icon . $widget->getCaption() . '
 				</a>';
         
         return $output;
