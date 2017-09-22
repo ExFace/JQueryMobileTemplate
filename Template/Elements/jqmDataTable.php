@@ -207,9 +207,8 @@ HTML;
         $output = <<<HTML
 
 <div class="card-action">
-    <div class="box row">
-		<div class="col-xs-12 col-sm-8 col-md-9">{$buttons_html}</div>
-		<div class="col-xs-12 col-sm-4 col-md-3 text-right" style="min-width: 350px;">
+    <div class="box">
+		<div class="pull-right text-right" style="min-width: 350px;">
 			<div class="pull-right">
 				<a href="#" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;" title="{$this->translate('WIDGET.REFRESH')}"><i class="fa fa-refresh"></i></a>
 				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline" title="{$this->translate('WIDGET.DATATABLE.SETTINGS_DIALOG.TITLE')}"><i class="fa fa-gear"></i></a>
@@ -226,6 +225,7 @@ HTML;
 				</form>
 			</div>
 		</div>
+        <div>{$buttons_html}</div>
 	</div>
 </div>
 
