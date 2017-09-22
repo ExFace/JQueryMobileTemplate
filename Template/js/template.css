@@ -2,6 +2,7 @@
 .text-right {text-align: right;}
 .text-left {text-align: left;}
 .text-center {text-align: center;}
+.exfHidden{display:none !important};
 
 /* Inputs */
 .exface_inputgroup {border-width: 1px 0 0 0 !important; padding: 10px 0 20px 0 !important;}
@@ -47,13 +48,12 @@ a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
 .ui-listview>li>a.ui-btn{height: initial;}
 .ui-btn-icon-notext.ui-btn-corner-all, .ui-btn-icon-notext.ui-corner-all {-webkit-border-radius: 0.4em;	border-radius: 0.4em;}
 
-/* misc */
+/* Buttons */
 .dialogButtons{text-align: right;}
-.exfHidden{display:none !important};
+
 /* DataTables customization */
 .jqmDataTable {margin: 0 -15px;}
 .dataTable .detailRow table {width:initial; margin: initial;}
-.dataTable thead {background-color: #f9f9f9;}
 .dataTable td .ui-checkbox{margin: 0;}
 .dataTable td.ok{background-color: green;}
 .dataTable td.warning{background-color: yellow;}
@@ -89,6 +89,7 @@ div.holoPressEffectDiv {
 	background-color: #CCCCCC;
 }
 
+/* navigation */
 /* Basic settings */
 .ui-li-static.ui-collapsible {
 	padding: 0;
