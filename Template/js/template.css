@@ -18,12 +18,20 @@
 table.dataTable.no-footer {border-bottom: none !important;}
 .dataTables_wrapper.no-footer .dataTables_scrollBody, table.dataTable thead th, table.dataTable thead td {border-bottom: 1px solid rgba(0,0,0,.12)}
 .tableFooter {padding: 5px 0}
+.dataTable .detailRow table {width:initial; margin: initial;}
+.dataTable td .ui-checkbox{margin: 0;}
+.dataTable td.ok{background-color: green;}
+.dataTable td.warning{background-color: yellow;}
+.dataTable td.error{background-color: red; color: white;}
 
 /* Tabs */
 ul.nd2Tabs {margin-left: 20px !important;} 
 
 /* nativeDroid2 cards */
 .nd2-card {max-width: none !important;}
+
+/* nativeDroid2 fixes */
+.ui-input-clear.ui-icon-delete:after {background-color: #ccc; width: 18px; height: 18px; margin-left: -9px; margin-top: -9px;}
 
 /* jQuery Mobile customization */
 .ui-content{min-height: calc(100vh - 110px);}
@@ -50,14 +58,6 @@ a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
 
 /* Buttons */
 .dialogButtons{text-align: right;}
-
-/* DataTables customization */
-.jqmDataTable {margin: 0 -15px;}
-.dataTable .detailRow table {width:initial; margin: initial;}
-.dataTable td .ui-checkbox{margin: 0;}
-.dataTable td.ok{background-color: green;}
-.dataTable td.warning{background-color: yellow;}
-.dataTable td.error{background-color: red; color: white;}
 
 /* Cards */		
 .masonry {}
