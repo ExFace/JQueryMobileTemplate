@@ -208,7 +208,7 @@ HTML;
 
 <div class="card-action">
     <div class="box">
-		<div class="pull-right text-right" style="min-width: 350px;">
+		<div class="pull-right text-right exf-toolbar" style="min-width: 350px;">
 			<div class="pull-right">
 				<a href="#" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;" title="{$this->translate('WIDGET.REFRESH')}"><i class="fa fa-refresh"></i></a>
 				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline" title="{$this->translate('WIDGET.DATATABLE.SETTINGS_DIALOG.TITLE')}"><i class="fa fa-gear"></i></a>
@@ -228,29 +228,6 @@ HTML;
         <div>{$buttons_html}</div>
 	</div>
 </div>
-
-<!--
-	<div class="ui-bar ui-toolbar ui-bar-a tableFooter">
-		<div style="float:left">{$buttons_html}</div>
-		<div style="float:right">
-			<div data-role="controlgroup" data-type="horizontal" style="float:left;margin-right:10px;">
-				<a href="#" id="{$this->getId()}_prevPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-back ui-nodisc-icon ui-alt-icon">&lt;</a>
-				<a href="#{$this->getId()}_pagingPopup" id="{$this->getId()}_pageInfo" data-rel="popup" class="ui-btn ui-corner-all"></a>
-				<a href="#" id="{$this->getId()}_nextPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-forward ui-nodisc-icon ui-alt-icon">&gt;</a>
-			</div>
-			<div style="float:right;">
-				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->buildJsRefresh(false)} return false;">Reload</a>
-				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
-			</div>
-			<div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
-				<form>
-				    <label for="{$this->getId()}_pageSlider">Page:</label>
-				    <input type="range" name="{$this->getId()}_pageSlider" id="{$this->getId()}_pageSlider" min="1" max="100" value="1">
-				</form>
-			</div>
-		</div>
-	</div>
--->
 HTML;
         return $output;
     }

@@ -84,7 +84,7 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
         if ($this->jqm_page_id) {
             return $this->jqm_page_id;
         } else {
-            return 'jqm' . $this->getPageId();
+            return $this->getPageId();
         }
     }
 
@@ -101,6 +101,11 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
     public function buildJsBusyIconHide()
     {
         return "$.mobile.loading('hide');";
+    }
+    
+    public function getId()
+    {
+        return '_' . $this->cleanId($this->getWidget()->getPageId()) . '_' . parent::getId();
     }
 }
 ?>
