@@ -43,29 +43,29 @@ class jqmDataConfigurator extends jqmTabs
         }
         $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
         
-        
+        // TODO replace this custom popup with a regular tabs widget
         $output = <<<JS
 $('body').append('\
 <div data-role="page" id="{$this->getId()}" data-dialog="true" data-close-btn="right">\
 	<div data-role="header">\
 		<h1><i class="fa fa-filter"></i> Tabelleneinstellungen</h1>\
-    	<ul data-role="nd2tabs" data-swipe="true" class="nd2Tabs">\
-    		<li data-tab="{$this->getId()}_popup_filters" data-tab-active="true" class="nd2Tabs-nav-item waves-effect waves-button waves-light">Filter</li>\
-    		<li data-tab="{$this->getId()}_popup_columns" class="nd2Tabs-nav-item waves-effect waves-button waves-light">Spalten</li>\
-    		<li data-tab="{$this->getId()}_popup_sorting" class="nd2Tabs-nav-item waves-effect waves-button waves-light">Sortierung</li>\
+    	<ul data-role="nd2tabs" class="nd2Tabs">\
+    		<li data-tab="{$this->getId()}_popup_filters" data-tab-active="true">Filter</li>\
+    		<li data-tab="{$this->getId()}_popup_columns">Spalten</li>\
+    		<li data-tab="{$this->getId()}_popup_sorting">Sortierung</li>\
     	</ul>\
 	</div>\
 \
 	<div class="tabs" data-role="content">\
-			<div data-role="nd2-tab" data-tab="{$this->getId()}_popup_filters">\
+			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_filters">\
 				{$filters_html}\
 			</div>\
-			<div data-role="nd2-tab" data-tab="{$this->getId()}_popup_columns">\
+			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_columns">\
 				<fieldset data-role="controlgroup">\
 					{$column_triggers}\
 				</fieldset>\
 			</div>\
-			<div data-role="nd2-tab" data-tab="{$this->getId()}_popup_sorting">\
+			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_sorting">\
 				\
 			</div>\
 \
@@ -77,26 +77,6 @@ $('body').append('\
 	</div><!-- /content -->\
 </div><!-- page-->\
 ');
-
-$(document).on('pagebeforeshow', '#{$this->getId()}', function(event, ui) {
-    $('#{$this->getId()} *[data-role="nd2tabs"] li').on('click',function(event){
-		$('#{$this->getId()} *[data-role="nd2tabs"] li').each(function(){
-			$( '#{$this->getId()} .tabs *[data-tab="' + $(this).data('tab') + '"]' ).hide();
-			$(this).removeClass('nd2Tabs-active');
-		});
-		$( '#{$this->getId()} .tabs *[data-tab="' + $(this).data('tab') + '"]' ).show();
-		$(this).addClass('nd2Tabs-active');
-		event.preventDefault();
-		return false;
-	});
-	
-	var activeTab = $('#{$this->getId()} *[data-tab-active="true"]');
-	if (activeTab){
-		activeTab.trigger('click');	
-	} else {
-		
-	}
-});
 JS;
 		return $output . parent::generateJs($jqm_page_id);
     }

@@ -161,7 +161,7 @@
         }
     });
 
-    $(document).bind("pagecreate", function(e) {
+    $(document).bind("pagebeforeshow", function(e) {
         $(document).trigger("includebeforecreate");
         return $("nd2-ad", e.target).ad();
     });
@@ -272,19 +272,27 @@
 
             // Activate Content Tab
             var oldContent = obj.closest('.ui-page').find(".nd2Tabs-content-tab.nd2Tab-active");
-
-            oldContent.addClass("to-" + directionTo);
-            window.setTimeout(function() {
-                oldContent.removeClass("nd2Tab-active to-" + directionTo);
-            }, 400);
+            
+            if (_self.element.data('swipe')){
+	            oldContent.addClass("to-" + directionTo);
+	            window.setTimeout(function() {
+	                oldContent.removeClass("nd2Tab-active to-" + directionTo);
+	            }, 400);
+            } else {
+            	oldContent.removeClass("nd2Tab-active");
+            }
 
             var newContent = obj.closest('.ui-page').find(".nd2Tabs-content-tab[data-tab='" + _self.settings.activeTab + "']");
-
-            newContent.addClass("nd2Tab-active from-" + direction);
-
-            window.setTimeout(function() {
-                newContent.removeClass("from-" + direction);
-            }, 150);
+        	
+            if (_self.element.data('swipe')){
+	            newContent.addClass("nd2Tab-active from-" + direction);
+	
+	            window.setTimeout(function() {
+	                newContent.removeClass("from-" + direction);
+	            }, 150);
+            } else {
+            	newContent.addClass("nd2Tab-active");
+            }
 
         },
         prepareTabs: function() {

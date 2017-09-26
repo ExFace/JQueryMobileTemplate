@@ -1,4 +1,4 @@
-/* General */
+	/* General */
 .text-right {text-align: right;}
 .text-left {text-align: left;}
 .text-center {text-align: center;}
@@ -13,6 +13,11 @@
 /* Dialogs */
 .ui-dialog-contain > .ui-header > .ui-title {margin: 0 25px;}
 .ui-dialog-contain > .ui-header > .ui-title > i {margin-right: 10px;}
+/* Transparent background and placement */
+.ui-content{min-height: calc(100vh - 110px);}
+.ui-dialog-contain .ui-content{min-height: initial;}
+.ui-dialog .ui-dialog-contain { margin-bottom: 0; margin-right: 10px; }
+.ui-dialog-transparent-bg {display: block !important; opacity: 0.4;}
 
 /* DataTables */
 table.dataTable.no-footer {border-bottom: none !important;}
@@ -24,6 +29,9 @@ table.dataTable.no-footer {border-bottom: none !important;}
 .dataTable td.warning{background-color: yellow;}
 .dataTable td.error{background-color: red; color: white;}
 
+/* Toolbars */
+.exf-quick-search .ui-btn {margin: 0;}
+
 /* Tabs */
 ul.nd2Tabs {margin-left: 20px !important;} 
 
@@ -33,61 +41,7 @@ ul.nd2Tabs {margin-left: 20px !important;}
 /* nativeDroid2 fixes */
 .ui-input-clear.ui-icon-delete:after {background-color: #ccc; width: 18px; height: 18px; margin-left: -9px; margin-top: -9px;}
 
-/* jQuery Mobile customization */
-.ui-content{min-height: calc(100vh - 110px);}
-.ui-dialog-contain .ui-content{min-height: initial;}
-.ui-corner-all {border-radius: 0.4em;}
-.ui-controlgroup.ui-btn-right {top: .4em;}
-.ui-bar.ui-toolbar {padding: 0.1em 1em; min-height: 50px; box-sizing: border-box;}
-.ui-bar.ui-toolbar .ui-btn-inline {margin: 0.4em 0; height: 1.3em; padding-top: 0.35em; padding-bottom: 0.35em;}
-.ui-bar .ui-controlgroup a.ui-btn {padding: 0 .5em; margin: 0; height: 2em; line-height: 2em;}
-.ui-controlgroup-controls .ui-btn-icon-notext {padding: .5em;}
-.ui-bar .ui-btn.ui-btn-icon-notext, .ui-bar .ui-controlgroup {margin: 0.4em 0;}
-.ui-bar .ui-btn-icon-notext {width: 2em;}
 a.ui-slider-handle-snapping { -webkit-transition: none; -moz-transition: none; }
-.ui-dialog .ui-dialog-contain { margin-bottom: 0; margin-right: 10px; }
-.ui-dialog-transparent-bg {display: block !important; opacity: 0.4;}
-.ui-panel-header {margin: -16px -16px 15px -16px; height: 41px;}
-.ui-dialog-header {margin: -17px -17px 20px -17px; max-width: inherit;}
-.ui-header.ui-panel-header h2 {margin: 0 10%;}
-.ui-field-contain>label, .ui-field-contain .ui-controlgroup-label, .ui-field-contain>.ui-rangeslider>label {text-align: right;}
-.ui-field-contain .ui-input-search {margin: 0;}
-.ui-field-contain>ul.ui-listview {float: right;}
-.ui-listview>li>a.ui-btn{height: initial;}
-.ui-btn-icon-notext.ui-btn-corner-all, .ui-btn-icon-notext.ui-corner-all {-webkit-border-radius: 0.4em;	border-radius: 0.4em;}
-
-/* Buttons */
-.dialogButtons{text-align: right;}
-
-/* Cards */		
-.masonry {}
-
-.masonry .item {
-	background: #FFF;
-	border: 1px solid #AAA;
-	margin: 5px;
-	overflow: hidden;
-	border-radius: 0.4em;
-	
-	width:  320px;
-	
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-.masonry .item a {text-decoration: none; color: black;}
-.masonry .item h2 {margin: 10px 15px 20px 15px; padding: 0; font-size: 250%;}
-.masonry .item h2 small {padding: 10px 0 0 0; display: block; font-size: initial;}
-.masonry .item h3 {margin: 0; padding: 15px 10px;}
-.masonry .item p {margin: 0px;padding: 10px;}
-.masonry .item i:after {font-size: 40px; color: #ccc;}
-@media ( min-width: 690px ) {
-	.masonry .item.w2 {width: 650px;}
-}
-
-div.holoPressEffectDiv {
-	background-color: #CCCCCC;
-}
 
 /* navigation */
 /* Basic settings */

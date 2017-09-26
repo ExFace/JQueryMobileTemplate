@@ -27,7 +27,7 @@ class jqmTab extends jqmPanel
         
         $output = <<<HTML
         
-            <li data-tab="{$this->getId()}" class="d2Tabs-nav-item waves-effect waves-button waves-light {$disabled_class}" {$active}>
+            <li data-tab="{$this->getId()}" {$active} {$disabled_class}>
                 {$icon} {$this->getWidget()->getCaption()}
             </li>
 HTML;
@@ -39,7 +39,7 @@ HTML;
         
         $output = <<<HTML
         
-    <div data-role="nd2-tab" data-tab="{$this->getId()}">
+    <div data-role="nd2tab" data-tab="{$this->getId()}">
             <div class="grid" id="{$this->getId()}_masonry_grid" style="width:100%;height:100%;">
                 {$this->buildHtmlForChildren()}
             </div>
