@@ -165,7 +165,7 @@ JS;
         
         if ($buttons_html) {
             $output = <<<HTML
-<div data-role="popup" id="{$this->getId()}_context_menu">
+<div data-role="popup" id="{$this->getId()}_context_menu" class="exf-context-menu">
 	<ul data-role="listview" data-inset="true">
 		{$buttons_html}
 	</ul>
@@ -184,14 +184,14 @@ HTML;
     			<div class="ui-block-a">
     				<h3 class="card-primary-title">$table_caption</h3>
     			</div>
-    			<div class="ui-block-b">
+    			<div class="ui-block-b exf-quick-search">
                     <form id="{$this->getId()}_quickSearch_form">
                         <div class="ui-grid-a pull-right" style="width: 100%">
-                            <div class="ui-block-a" style="width: calc(100% - 130px); margin-right: 10px;">
+                            <div class="ui-block-a" style="width: calc(100% - 108px); margin-right: 10px;">
         				        <input id="{$this->getId()}_quickSearch" type="text" placeholder="{$this->getQuickSearchPlaceholder()}" data-clear-btn="true" />
                             </div>
-                            <div class="ui-block-b" style="width: 120px;">
-                                <a href="#" data-role="button" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;"><i class="fa fa-search"></i></a>
+                            <div class="ui-block-b" style="width: 98px;">
+                                <a href="#" data-role="button" class="ui-btn ui-btn-inline ui-btn-mini" onclick="{$this->buildJsRefresh(false)} return false;"><i class="fa fa-search"></i></a>
                                 <a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" class="ui-btn ui-btn-inline"><i class="fa fa-filter"></i></a>
                             </div>
         				</div>
@@ -208,22 +208,18 @@ HTML;
 
 <div class="card-action">
     <div class="box">
-		<div class="pull-right text-right exf-toolbar" style="min-width: 350px;">
-			<div class="pull-right">
-				<a href="#" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;" title="{$this->translate('WIDGET.REFRESH')}"><i class="fa fa-refresh"></i></a>
-				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline" title="{$this->translate('WIDGET.DATATABLE.SETTINGS_DIALOG.TITLE')}"><i class="fa fa-gear"></i></a>
-			</div>
-			<div data-role="controlgroup" data-type="horizontal"  class="pull-right" style="margin-right:10px;">
-				<a href="#" id="{$this->getId()}_prevPage" class="ui-btn"><i class="fa fa-chevron-left"></i></a>
-				<a href="#{$this->getId()}_pagingPopup" id="{$this->getId()}_pageInfo" data-rel="popup" class="ui-btn"></a>
-				<a href="#" id="{$this->getId()}_nextPage" class="ui-btn"><i class="fa fa-chevron-right"></i></a>
-			</div>
-			<div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
+		<div class="pull-right text-right exf-toolbar exf-paginator" style="min-width: 350px;">
+			<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline" title="{$this->translate('WIDGET.DATATABLE.SETTINGS_DIALOG.TITLE')}"><i class="fa fa-filter"></i></a>
+			<a href="#" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;" title="{$this->translate('WIDGET.REFRESH')}"><i class="fa fa-refresh"></i></a>
+			<a href="#{$this->getId()}_pagingPopup" id="{$this->getId()}_pageInfo" data-rel="popup" class="ui-btn ui-btn-inline"></a>
+		    <div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
 				<form>
 				    <label for="{$this->getId()}_pageSlider">Page:</label>
 				    <input type="range" name="{$this->getId()}_pageSlider" id="{$this->getId()}_pageSlider" min="1" max="100" value="1">
 				</form>
 			</div>
+			<a href="#" id="{$this->getId()}_prevPage" class="ui-btn ui-btn-inline"><i class="fa fa-chevron-left"></i></a>
+			<a href="#" id="{$this->getId()}_nextPage" class="ui-btn ui-btn-inline"><i class="fa fa-chevron-right"></i></a>
 		</div>
         <div>{$buttons_html}</div>
 	</div>
