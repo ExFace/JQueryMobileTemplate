@@ -43,40 +43,62 @@ class jqmDataConfigurator extends jqmTabs
         }
         $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
         
-        // TODO replace this custom popup with a regular tabs widget
+        
         $output = <<<JS
 $('body').append('\
 <div data-role="page" id="{$this->getId()}" data-dialog="true" data-close-btn="right">\
-	<div data-role="header">\
-		<h1><i class="fa fa-filter"></i> Tabelleneinstellungen</h1>\
-    	<ul data-role="nd2tabs" class="nd2Tabs">\
-    		<li data-tab="{$this->getId()}_popup_filters" data-tab-active="true">Filter</li>\
-    		<li data-tab="{$this->getId()}_popup_columns">Spalten</li>\
-    		<li data-tab="{$this->getId()}_popup_sorting">Sortierung</li>\
-    	</ul>\
+	<div data-role="header" class="ui-alt-icon">\
+		<h1>Tabelleneinstellungen</h1>\
 	</div>\
 \
-	<div class="tabs" data-role="content">\
-			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_filters">\
+	<div data-role="content">\
+			<div data-role="navbar" class="ui-dialog-header">\
+				<ul>\
+					<li><a href="#{$this->getId()}_popup_filters" class="ui-btn-active">Filter</a></li>\
+					<li><a href="#{$this->getId()}_popup_columns">Spalten</a></li>\
+					<li><a href="#{$this->getId()}_popup_sorting">Sortierung</a></li>\
+				</ul>\
+			</div>\
+			<div id="{$this->getId()}_popup_filters">\
 				{$filters_html}\
 			</div>\
-			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_columns">\
+			<div id="{$this->getId()}_popup_columns">\
 				<fieldset data-role="controlgroup">\
 					{$column_triggers}\
 				</fieldset>\
 			</div>\
-			<div data-role="nd2tab" data-tab="{$this->getId()}_popup_sorting">\
+			<div id="{$this->getId()}_popup_sorting">\
 				\
 			</div>\
 \
 			<div style="text-align:right;" class="ui-alt-icon">\
-				<a href="#" data-rel="back" class="ui-btn ui-btn-inline"><i class="{$this->buildCssIconClass(Icons::TIMES)}"></i> {$this->getWorkbench()->getCoreApp()->getTranslator()->translate('ACTION.SHOWDIALOG.CANCEL_BUTTON')}</a>\
-                <a href="#" data-rel="back" class="ui-btn ui-btn-inline" onclick="{$this->getTemplate()->getElement($widget)->buildJsRefresh(false)}"><i class="{$this->buildCssIconClass(Icons::SEARCH)}"></i> {$this->getWorkbench()->getCoreApp()->getTranslator()->translate('ACTION.READDATA.SEARCH')}</a>\
+				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::TIMES)} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a>\
+                <a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::CHECK)} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->getTemplate()->getElement($widget)->buildJsRefresh(false)}">OK</a>\
 			</div>\
 \
 	</div><!-- /content -->\
 </div><!-- page-->\
 ');
+
+$(document).on('pagebeforeshow', '#{$this->getId()}', function(event, ui) {
+	$('#{$this->getId()} *[data-role="navbar"] a').on('click',function(event){
+		$(this).parent().siblings().each(function(){
+			$( $(this).children('a').attr('href') ).hide();
+			$(this).children('a').removeClass('ui-btn-active');
+		});
+		$( $(this).attr('href') ).show();
+		$(this).addClass('ui-btn-active');
+		event.preventDefault();
+		return false;
+	});
+	
+	var activeTab = $('#{$this->getId()} *[data-role="navbar"] a.ui-btn-active');
+	if (activeTab){
+		activeTab.trigger('click');	
+	} else {
+		
+	}
+});
 JS;
 		return $output . parent::generateJs($jqm_page_id);
     }

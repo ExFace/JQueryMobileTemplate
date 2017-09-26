@@ -49,12 +49,10 @@ class jqmDataTable extends jqmAbstractElement
         // output the html code
         // TODO replace "stripe" class by a custom css class
         $output = <<<HTML
-<div class="nd2-card">
-    {$header}
-    <div class="jqmDataTable">
-    	{$this->buildHtmlTable('mdl-data-table stripe')}
-    </div>
-    {$footer}
+<div class="jqmDataTable">
+	{$header}
+	{$this->buildHtmlTable('stripe')}
+	{$footer}
 </div>
 {$this->buildHtmlContextMenu()}
 HTML;
@@ -66,15 +64,18 @@ HTML;
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
-        
-        if (is_null($jqm_page_id)){
-            $jqm_page_id = $this->getJqmPageId();
+                
+        // configure pagination
+        if ($widget->getPaginate()) {
+            $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.PAGE_SIZE')). ',';
+        } else {
+            $paging_options = '"paging": false,';
         }
         
         $output = <<<JS
 var {$this->getId()}_table;
 
-$(document).on('pageshow', '#{$jqm_page_id}', function() {
+$(document).on('pageshow', '#{$this->getJqmPageId()}', function() {
 	
 	if ({$this->getId()}_table && $.fn.DataTable.isDataTable( '#{$this->getId()}' )) {
 		{$this->getId()}_table.columns.adjust();
@@ -96,8 +97,8 @@ $(document).on('pageshow', '#{$jqm_page_id}', function() {
     {$this->buildJsQuicksearch()}
     
     {$this->buildJsRowDetails()}
-    
-    {$this->buildJsTapHandler()}
+	
+	{$this->buildJsRowSelection()}
 
 } );
 	
@@ -145,6 +146,37 @@ JS;
     }
 
     /**
+     * Renders javascript event handlers for tapping on rows.
+     * A single tap (or click) selects a row, while a longtap opens the
+     * context menu for the row if one is defined. The long tap also selects the row.
+     */
+    protected function buildJsRowSelection()
+    {
+        $output = '';
+        if ($this->getWidget()->getMultiSelect()) {
+            $output .= "
+					$('#{$this->getId()} tbody').on( 'click', 'tr', function () {
+				        $(this).toggleClass('selected');
+				    } );
+					";
+        } else {
+            // Select a row on tap. Make sure no other row is selected
+            $output .= "
+					$('#{$this->getId()} tbody').on( 'click', 'tr', function (event) {
+				        if ( $(this).hasClass('selected') ) {
+				            $(this).removeClass('selected');
+				        }
+				        else {
+				            {$this->getId()}_table.$('tr.selected').removeClass('selected');
+				             $(this).addClass('selected');
+				        }
+				    } );
+					";
+        }
+        return $output;
+    }
+
+    /**
      * Generates a popup context menu with actions available upon selection of a row.
      * The menu contains all buttons, that do
      * something with a specific object (= the corresponding action has input_rows_min = 1) or do not have an action at all.
@@ -159,13 +191,13 @@ JS;
         foreach ($this->getWidget()->getButtons() as $b) {
             /* @var $b \exface\Core\Widgets\Button */
             if (! $b->isHidden() && (! $b->getAction() || $b->getAction()->getInputRowsMin() === 1)) {
-                $buttons_html .= '<li ><a href="#" onclick="' . $this->getTemplate()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');"><i class="' . $this->buildCssIconClass($b->getIconName()) . '"></i> ' . $b->getCaption() . '</a></li>';
+                $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIconName()) . '"><a href="#" onclick="' . $this->getTemplate()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
             }
         }
         
         if ($buttons_html) {
             $output = <<<HTML
-<div data-role="popup" id="{$this->getId()}_context_menu" class="exf-context-menu">
+<div data-role="popup" id="{$this->getId()}_context_menu" data-theme="b">
 	<ul data-role="listview" data-inset="true">
 		{$buttons_html}
 	</ul>
@@ -180,24 +212,26 @@ HTML;
         $table_caption = $this->getWidget()->getCaption() ? $this->getWidget()->getCaption() : $this->getMetaObject()->getName();
         
         $output = <<<HTML
-	      <div class="ui-grid-a ui-responsive card-title has-supporting-text">
-    			<div class="ui-block-a">
-    				<h3 class="card-primary-title">$table_caption</h3>
-    			</div>
-    			<div class="ui-block-b exf-quick-search">
-                    <form id="{$this->getId()}_quickSearch_form">
-                        <div class="ui-grid-a pull-right" style="width: 100%">
-                            <div class="ui-block-a" style="width: calc(100% - 108px); margin-right: 10px;">
-        				        <input id="{$this->getId()}_quickSearch" type="text" placeholder="{$this->getQuickSearchPlaceholder()}" data-clear-btn="true" />
-                            </div>
-                            <div class="ui-block-b" style="width: 98px;">
-                                <a href="#" data-role="button" class="ui-btn ui-btn-inline ui-btn-mini" onclick="{$this->buildJsRefresh(false)} return false;"><i class="fa fa-search"></i></a>
-                                <a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" class="ui-btn ui-btn-inline"><i class="fa fa-filter"></i></a>
-                            </div>
-        				</div>
-                        </form>
-    			</div>
+		<form id="{$this->getId()}_quickSearch_form">
+		<div class="ui-toolbar ui-bar ui-bar-a">
+			<div class="ui-grid-a ui-responsive">
+				<div class="ui-block-a">
+					<h2 style="line-height: 2.8em;">$table_caption</h2>
+				</div>
+				<div class="ui-block-b" style="float: right; text-align: right;">
+					<div data-role="controlgroup" data-type="horizontal" style="float: right;">
+						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->buildJsRefresh(false)} return false;">Search</a>
+						<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
+					</div>
+					<div style="margin-right: 90px;">
+						<input id="{$this->getId()}_quickSearch" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
+					</div>
+				</div>
+			</div>
 		</div>
+		<div class="ui-grid-a ui-responsive" id="{$this->getId()}_filters_container" style="padding: 0 1em;">
+		</div>
+	</form>
 HTML;
         return $output;
     }
@@ -205,45 +239,27 @@ HTML;
     protected function buildHtmlFooter($buttons_html)
     {
         $output = <<<HTML
-
-<div class="card-action">
-    <div class="box">
-		<div class="pull-right text-right exf-toolbar exf-paginator" style="min-width: 350px;">
-			<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline" title="{$this->translate('WIDGET.DATATABLE.SETTINGS_DIALOG.TITLE')}"><i class="fa fa-filter"></i></a>
-			<a href="#" class="ui-btn ui-btn-inline" onclick="{$this->buildJsRefresh(false)} return false;" title="{$this->translate('WIDGET.REFRESH')}"><i class="fa fa-refresh"></i></a>
-			<a href="#{$this->getId()}_pagingPopup" id="{$this->getId()}_pageInfo" data-rel="popup" class="ui-btn ui-btn-inline"></a>
-		    <div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
+		<div class="ui-bar ui-toolbar ui-bar-a tableFooter">
+		<div style="float:left" class="ui-alt-icon">{$buttons_html}</div>
+		<div style="float:right">
+			<div data-role="controlgroup" data-type="horizontal" style="float:left;margin-right:10px;">
+				<a href="#" id="{$this->getId()}_prevPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-back ui-nodisc-icon ui-alt-icon">&lt;</a>
+				<a href="#{$this->getId()}_pagingPopup" id="{$this->getId()}_pageInfo" data-rel="popup" class="ui-btn ui-corner-all"></a>
+				<a href="#" id="{$this->getId()}_nextPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-forward ui-nodisc-icon ui-alt-icon">&gt;</a>
+			</div>
+			<div style="float:right;">
+				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->buildJsRefresh(false)} return false;">Reload</a>
+				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
+			</div>
+			<div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
 				<form>
 				    <label for="{$this->getId()}_pageSlider">Page:</label>
 				    <input type="range" name="{$this->getId()}_pageSlider" id="{$this->getId()}_pageSlider" min="1" max="100" value="1">
 				</form>
 			</div>
-			<a href="#" id="{$this->getId()}_prevPage" class="ui-btn ui-btn-inline"><i class="fa fa-chevron-left"></i></a>
-			<a href="#" id="{$this->getId()}_nextPage" class="ui-btn ui-btn-inline"><i class="fa fa-chevron-right"></i></a>
 		</div>
-        <div>{$buttons_html}</div>
 	</div>
-</div>
 HTML;
-        return $output;
-    }
-    
-    
-    
-    /**
-     * Renders javascript event handlers for tapping on rows.
-     * A single tap (or click) selects a row, while a longtap opens the
-     * context menu for the row if one is defined. The long tap also selects the row.
-     */
-    protected function buildJsTapHandler()
-    {
-        $output = '';
-            // Select a row on tap. Make sure no other row is selected
-            $output .= "
-                $('#{$this->getId()} tbody').on( 'taphold', 'tr', function(e){
-                    {$this->getId()}_table.row($(e.target).closest('tr')).select();
-                } );
-             ";
         return $output;
     }
 

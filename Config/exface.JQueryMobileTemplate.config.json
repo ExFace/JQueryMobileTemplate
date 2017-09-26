@@ -9,7 +9,7 @@
 	"DEFAULT_AJAX_URL": "exface/exface.php?exftpl=exface.JQueryMobileTemplate",
 	"DATAGRID_SHOW_FOOTER_BY_DEFAULT": false,
 	
-	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "fa fa-",
+	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "",
     "ICON_CLASSES.EDIT": "content-create",
     "ICON_CLASSES.REMOVE": "action-delete",
     "ICON_CLASSES.ADD": "content-add",

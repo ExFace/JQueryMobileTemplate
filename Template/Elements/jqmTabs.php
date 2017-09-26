@@ -12,38 +12,14 @@ use exface\Core\Widgets\Tabs;
  */
 class jqmTabs extends jqmContainer
 {
-    public function generateHtml(){        
-        return $this->buildHtmlTabHeaders() . $this->buildHtmlTabBodies();
-    }
-    
-    public function buildHtmlTabBodies()
-    {
-        $bodies = '';
-        foreach ($this->getWidget()->getChildren() as $tab) {
-            $bodies .= $this->getTemplate()->getElement($tab)->buildHtmlBody();
+    public function generateHtml(){
+        $html = '';
+        
+        foreach ($this->getWidget()->getTabs() as $tab){
+            $html .= $this->getTemplate()->getElement($tab)->generateHtml();
         }
-        return <<<HTML
-
-        <div id="{$this->getId()}_tabs">
-            {$bodies}
-        </div>
         
-HTML;
-    }
-    
-    public function buildHtmlTabHeaders()
-    {
-        $headers = '';
-        foreach ($this->getWidget()->getChildren() as $tab) {
-            $headers .= $this->getTemplate()->getElement($tab)->buildHtmlHeader();
-        }
-        return <<<HTML
-        
-        <ul id="{$this->getId()}" data-role="nd2tabs" data-swipe="true">
-            {$headers}
-        </ul>
-        
-HTML;
+        return $html;
     }
 }
 ?>

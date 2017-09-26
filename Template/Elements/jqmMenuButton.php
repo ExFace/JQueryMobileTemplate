@@ -3,14 +3,10 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 
 use exface\Core\Widgets\Button;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
-use exface\Core\Widgets\MenuButton;
-use exface\Core\CommonLogic\Constants\Icons;
 
 /**
  * generates jQuery Mobile buttons for ExFace
  *
- * @method MenuButton getWidget()
- * 
  * @author Andrej Kabachnik
  *        
  */
@@ -20,25 +16,21 @@ class jqmMenuButton extends jqmAbstractElement
     use JqueryButtonTrait;
 
     /**
-     * 
-     * {@inheritDoc}
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::generateHtml()
+     *
+     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::generateHtml()
      */
     function generateHtml()
     {
-        $widget = $this->getWidget();
-        
         $buttons_html = '';
-        foreach ($widget->getButtons() as $b) {
-            $buttons_html .= '<li><a href="#" onclick="' . $this->buildJsButtonFunctionName($b) . '(); $(this).parent().parent().parent().popup(\'close\');"><i class="' . $this->buildCssIconClass($b->getIconName()) . '"></i> ' . $b->getCaption() . '</a></li>';
+        foreach ($this->getWidget()->getButtons() as $b) {
+            $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIconName()) . '"><a href="#" onclick="' . $this->buildJsButtonFunctionName($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
         }
-        
-        $icon = $widget->getIconName() ? $this->buildCssIconClass($widget->getIconName()) : $this->buildCssIconClass(Icons::CHEVRON_DOWN);
+        $icon_classes = ($this->getWidget()->getIconName() ? ' ui-icon-' . $this->buildCssIconClass($this->getWidget()->getIconName()) : '') . ($this->getWidget()->getCaption() ? '' : ' ui-btn-icon-notext');
         
         $output = <<<HTML
 
-<a href="#{$this->getId()}" data-rel="popup" class="ui-btn ui-btn-inline"><i class="{$icon}"></i> {$widget->getCaption()}</a>
-<div data-role="popup" id="{$this->getId()}">
+<a href="#{$this->getId()}" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-alt-icon {$icon_classes}">{$this->getWidget()->getCaption()}</a>
+<div data-role="popup" id="{$this->getId()}" data-theme="b">
 	<ul data-role="listview" data-inset="true">
 		{$buttons_html}
 	</ul>

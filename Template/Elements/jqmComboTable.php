@@ -22,7 +22,7 @@ class jqmComboTable extends jqmInput
     {
         $output = '	<div class="fitem exf_input" title="' . $this->buildHintText() . '">
 						<label for="' . $this->getId() . '">' . $this->getWidget()->getCaption() . '</label>
-						<input id="' . $this->getId() . '_autocomplete_input" type="text" data-clear-btn="true" class="ui-input-has-clear" value="' . $this->getWidget()->getValueText() . '" />
+						<input id="' . $this->getId() . '_autocomplete_input"  data-type="search" placeholder="Suchen..." value="' . $this->getWidget()->getValueText() . '" />
 						<input type="hidden"		
 								id="' . $this->getId() . '" 
 								name="' . $this->getWidget()->getAttributeAlias() . '"
