@@ -13,7 +13,8 @@
 		"issues" : "https://github.com/exface/JQueryMobileTemplate/issues"
 	},
 	"require" : {
-		"exface/core" : "~0.1",
+		"exface/core": "~0.1",
+		"kabachello/jquery-nativedroid2": "dev-master", 
 		"bower-asset/masonry" : "~4",
 		"bower-asset/datatables.net" : "~1.10.12",
 		"bower-asset/datatables.net-dt" : "~1.10.12",
