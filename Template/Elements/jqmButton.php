@@ -26,7 +26,7 @@ class jqmButton extends jqmAbstractElement
         // Actions with template scripts may contain some helper functions or global variables.
         // Print the here first.
         if ($this->getAction() && $this->getAction()->implementsInterface('iRunTemplateScript')) {
-            $output .= $this->getAction()->printHelperFunctions();
+            $output .= $this->getAction()->buildScriptHelperFunctions();
         }
         
         if ($click = $this->buildJsClickFunction()) {
