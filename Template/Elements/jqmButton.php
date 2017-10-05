@@ -77,10 +77,13 @@ class jqmButton extends jqmAbstractElement
         // The problem is, we would have to fetch the page via AJAX and insert it into the DOM, which
         // would probably mean, that we have to take care of removing it ourselves (to save memory)...
         return $this->buildJsRequestDataCollector($action, $input_element) . "
-					$.mobile.changePage('" . $this->getAjaxUrl() . "&resource=" . $widget->getPageId() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
+					$.mobile.pageContainer.pagecontainer('change', '" . $this->getAjaxUrl() . "&resource=" . $widget->getPageId() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
 					";
     }
 
+    /* FIXME using mobile.changePage caches pages, which leads to a page called with different prefills
+     * to allways show the same content (the first prefill). Using the default location.href navigation
+     * method causes the screen to go blank for a second, which is not as nice as the jqm transitions.
     protected function buildJsClickShowWidget(iShowWidget $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
@@ -89,7 +92,7 @@ class jqmButton extends jqmAbstractElement
 				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPageId()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
         return $output;
-    }
+    }*/
 
     protected function buildJsClickGoBack(ActionInterface $action, AbstractJqueryElement $input_element)
     {
