@@ -102,5 +102,21 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
     {
         return "$.mobile.loading('hide');";
     }
+    
+    /**
+     * Element ids for jQuery mobile must contain the page id as the default AJAX loading method
+     * keeps pages in the DOM as long as it likes. This means, that all kinds of cheks for existing
+     * or initialized elements (like wether a DataTable is initialized for a given element id)
+     * may return TRUE if the previously shown page had an element with the same id. This happens
+     * quite often since element ids are derived from widget types: thus, a all typical pages with a
+     * DataTable will have the same id for the data table.
+     *
+     * {@inheritDoc}
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::getId()
+     */
+    public function getId()
+    {
+        return '_' . $this->cleanId($this->getWidget()->getPageId()) . '_' . parent::getId();
+    }
 }
 ?>
