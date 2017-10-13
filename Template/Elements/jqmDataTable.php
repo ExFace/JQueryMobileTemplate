@@ -4,6 +4,10 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTablesTrait;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTableTrait;
 use exface\Core\CommonLogic\Constants\Icons;
+use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryToolbarsTrait;
+use exface\Core\Widgets\Button;
+use exface\Core\Widgets\MenuButton;
+use exface\Core\Widgets\ButtonGroup;
 
 /**
  *
@@ -14,78 +18,41 @@ class jqmDataTable extends jqmAbstractElement
 {
     
     use JqueryDataTableTrait;
+    
     use JqueryDataTablesTrait;
+    
+    use JqueryToolbarsTrait;
 
     private $on_load_success = '';
 
     private $editable = false;
 
     private $editors = array();
+    
+    protected function init()
+    {
+        parent::init();
+        // Do not render the search action in the main toolbar. We will add custom
+        // buttons via HTML instead.
+        $this->getWidget()->getToolbarMain()->setIncludeSearchActions(false);
+    }
 
-    function generateHtml()
+    public function generateHtml()
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
-        $thead = '';
-        $tfoot = '';
         
-        // Column headers
-        /* @var $col \exface\Core\Widgets\DataColumn */
-        foreach ($widget->getColumns() as $col) {
-            $thead .= '<th>' . $col->getCaption() . '</th>';
-            $tfoot .= '<th class="text-right"></th>';
-        }
-        
-        if ($widget->hasRowDetails()) {
-            $thead = '<th></th>' . $thead;
-            if ($tfoot) {
-                $tfoot = '<th></th>' . $tfoot;
-            }
-        }
-        
-        // add buttons
-        /* @var $more_buttons_menu \exface\Core\Widgets\MenuButton */
-        $more_buttons_menu = null;
-        if ($widget->hasButtons()) {
-            foreach ($widget->getButtons() as $button) {
-                // Make pomoted and regular buttons visible right in the bottom toolbar
-                // Hidden buttons also go here, because it does not make sense to put them into the menu
-                if ($button->getVisibility() !== EXF_WIDGET_VISIBILITY_OPTIONAL || $button->isHidden()) {
-                    $button_html .= $this->getTemplate()->generateHtml($button);
-                }
-                // Put all visible buttons into "more actions" menu
-                // TODO do not create the more actions menu if all buttons are promoted!
-                if (! $button->isHidden()) {
-                    if (! $more_buttons_menu) {
-                        $more_buttons_menu = $widget->getPage()->createWidget('MenuButton', $widget);
-                        $more_buttons_menu->setIconName(Icons::ELLIPSIS_H);
-                        $more_buttons_menu->setCaption('');
-                    }
-                    $more_buttons_menu->addButton($button);
-                }
-            }
-        }
-        if ($more_buttons_menu) {
-            $button_html .= $this->getTemplate()->getElement($more_buttons_menu)->generateHtml();
-        }
-        
-        $bottom_toolbar = $this->buildHtmlFooter($button_html);
-        $top_toolbar = $widget->getHideHeader() ? '' : $this->buildHtmlHeader();
+        // Toolbars
+        $footer = $this->buildHtmlFooter($this->buildHtmlToolbars());
+        $header = $this->buildHtmlHeader();
         
         // output the html code
         // TODO replace "stripe" class by a custom css class
         $output = <<<HTML
 <div class="jqmDataTable">
-	{$top_toolbar}
-	<table id="{$this->getId()}" class="stripe" cellspacing="0" width="100%">
-		<thead>
-			{$thead}
-		</thead>
-		<tfoot>
-			{$tfoot}
-		</tfoot>
-	</table>
-	{$bottom_toolbar}
+	{$header}
+	{$this->buildHtmlTable('stripe')}
+	{$footer}
 </div>
 {$this->buildHtmlContextMenu()}
 HTML;
@@ -93,140 +60,11 @@ HTML;
         return $output;
     }
 
-    function generateJs($jqm_page_id = null)
+    public function generateJs($jqm_page_id = null)
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
-        $columns = array();
-        $column_triggers = '';
-        $column_number_offset = 0;
-        $filters_html = '';
-        $filters_js = '';
-        $filters_ajax = "d.q = $('#" . $this->getId() . "_quickSearch').val();\n";
-        $buttons_js = '';
-        $default_sorters = '';
-        
-        // row details
-        if ($widget->hasRowDetails()) {
-            $columns[] = '
-					{
-						"class":          "details-control",
-						"orderable":      false,
-						"data":           null,
-						"defaultContent": \'<a class="ui-collapsible-heading ui-collapsible-heading-collapsed ' . $this->getRowDetailsExpandIcon() . ' ui-btn-icon-notext" href="javascript:;"></a>\'
-					}
-					';
-            $column_number_offset ++;
-        }
-        
-        foreach ($widget->getSorters() as $sorter) {
-            $column_exists = false;
-            foreach ($widget->getColumns() as $nr => $col) {
-                if ($col->getAttributeAlias() == $sorter->getProperty('attribute_alias')) {
-                    $column_exists = true;
-                    $default_sorters .= '[ ' . $nr . ', "' . $sorter->getProperty('direction') . '" ], ';
-                }
-            }
-            if (! $column_exists) {
-                // TODO add a hidden column
-            }
-        }
-        // Remove tailing comma
-        if ($default_sorters)
-            $default_sorters = substr($default_sorters, 0, - 2);
-        
-        // columns
-        foreach ($widget->getColumns() as $nr => $col) {
-            $columns[] = $this->buildJsColumnDef($col);
-            $nr = $nr + $column_number_offset;
-            if ($col->getFooter()) {
-                $footer_callback .= <<<JS
-	            // Total over all pages
-	            if (api.ajax.json().footer[0]['{$col->getDataColumnName()}']){
-		            total = api.ajax.json().footer[0]['{$col->getDataColumnName()}'];
-		            // Update footer
-		            $( api.column( {$nr} ).footer() ).html( total );
-	           	}
-JS;
-            }
-            if (! $col->isHidden()) {
-                $column_triggers .= '<label for="' . $widget->getId() . '_cToggle_' . $col->getDataColumnName() . '">' . $col->getCaption() . '</label><input type="checkbox" name="' . $col->getDataColumnName() . '" id="' . $widget->getId() . '_cToggle_' . $col->getDataColumnName() . '" checked="true">';
-            }
-        }
-        $columns = implode(', ', $columns);
-        
-        if ($footer_callback) {
-            $footer_callback = '
-				, "footerCallback": function ( row, data, start, end, display ) {
-					var api = this.api(), data;
-		
-		            // Remove the formatting to get integer data for summation
-		            var intVal = function ( i ) {
-		                return typeof i === \'string\' ?
-		                    i.replace(/[\$,]/g, \'\')*1 :
-		                    typeof i === \'number\' ?
-		                        i : 0;
-		            };
-					' . $footer_callback . '
-				}';
-        }
-        
-        // Filters defined in the UXON description
-        if ($widget->hasFilters()) {
-            foreach ($widget->getFilters() as $fnr => $fltr) {
-                // Skip promoted filters, as they are displayed next to quick search
-                if ($fltr->getVisibility() == EXF_WIDGET_VISIBILITY_PROMOTED)
-                    continue;
-                $fltr_element = $this->getTemplate()->getElement($fltr);
-                $filters_html .= $this->getTemplate()->generateHtml($fltr);
-                $filters_js .= $this->getTemplate()->generateJs($fltr, $this->getId() . '_popup_config');
-                $filters_ajax .= 'd.fltr' . str_pad($fnr, 2, 0, STR_PAD_LEFT) . '_' . $fltr->getAttributeAlias() . ' = ' . $fltr_element->buildJsValueGetter() . ";\n";
                 
-                // Here we generate some JS make the filter visible by default, once it gets used.
-                // This code will be called when the table's config page gets closed.
-                if (! $fltr->isHidden()) {
-                    $filters_js_promoted .= "
-							if (" . $fltr_element->buildJsValueGetter() . " && $('#" . $fltr_element->getId() . "').parents('#{$this->getId()}_popup_config').length > 0){
-								var fltr = $('#" . $fltr_element->getId() . "').parents('.exf_input');
-								var ui_block = $('<div></div>');
-								if ($('#{$this->getId()}_filters_container').children('div').length % 2 == 0){
-									ui_block.addClass('ui-block-a');
-								} else {
-									ui_block.addClass('ui-block-b');
-								}
-								ui_block.appendTo('#{$this->getId()}_filters_container');
-								fltr.detach().appendTo(ui_block);
-								fltr.addClass('ui-field-contain');
-							}
-					";
-                    /*
-                     * $filters_js_promoted .= "
-                     * if (" . $fltr_element->buildJsValueGetter() . "){
-                     * var fltr = $('#" . $fltr_element->getId() . "').parents('.exf_input');
-                     * var ui_block = $('<div></div>');
-                     * if ($('#{$this->getId()}_filters_container').children('div').length % 2 == 0){
-                     * ui_block.addClass('ui-block-a');
-                     * } else {
-                     * ui_block.addClass('ui-block-b');
-                     * }
-                     * ui_block.appendTo('#{$this->getId()}_filters_container');
-                     * fltr.detach().appendTo(ui_block);
-                     * fltr.addClass('ui-field-contain');
-                     * }
-                     * ";
-                     */
-                }
-            }
-        }
-        $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
-        
-        // buttons
-        if ($widget->hasButtons()) {
-            foreach ($widget->getButtons() as $button) {
-                $buttons_js .= $this->getTemplate()->generateJs($button);
-            }
-        }
-        
         // configure pagination
         if ($widget->getPaginate()) {
             $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.PAGE_SIZE')). ',';
@@ -248,36 +86,19 @@ $(document).on('pageshow', '#{$this->getJqmPageId()}', function() {
 		setColumnVisibility(this.name, (this.checked ? true : false) );
 	});
 	
-	{$this->getId()}_table = $('#{$this->getId()}').DataTable( {
-		"dom": 't',
-		"deferRender": true,
-		"processing": true,
-		"serverSide": true,
-		{$paging_options}
-		"scrollX": true,
-		"scrollXollapse": true,
-		{$this->buildJsDataSource($filters_ajax)}
-		"language": {
-            "zeroRecords": "{$widget->getEmptyText()}"
-        },
-		"columns": [{$columns}],
-		"order": [{$default_sorters}],
-		"drawCallback": function(settings, json) {
-			{$this->getId()}_drawPagination();
-			{$this->getId()}_table.columns.adjust();
-			{$this->buildJsDisableTextSelection()}
-			{$this->buildJsBusyIconHide()}
-		}
-		{$footer_callback}
-	} );
+	{$this->getId()}_table = {$this->buildJsTableInit()}
 	
-	{$this->buildJsPagination()}
-	
-	{$this->buildJsQuicksearch()}
+    {$this->buildJsClickListeners()}
+    
+    {$this->buildJsInitialSelection()}
+    
+    {$this->buildJsPagination()}
+    
+    {$this->buildJsQuicksearch()}
+    
+    {$this->buildJsRowDetails()}
 	
 	{$this->buildJsRowSelection()}
-	
-	{$this->buildJsRowDetails()}
 
 } );
 	
@@ -305,73 +126,10 @@ function {$this->getId()}_drawPagination(){
 	
 }
 
-function {$this->getId()}_refreshPromotedFilters(){
-	{$filters_js_promoted}
-}
+{$this->getTemplate()->getElement($widget->getConfiguratorWidget())->generateJs($jqm_page_id)}
+    
+{$this->buildJsButtons()}
 
-$(document).on('pagebeforeshow', '#{$this->getId()}_popup_config', function(event, ui) {
-	$('#{$this->getId()}_popup_config *[data-role="navbar"] a').on('click',function(event){
-		$(this).parent().siblings().each(function(){
-			$( $(this).children('a').attr('href') ).hide();
-			$(this).children('a').removeClass('ui-btn-active');
-		});
-		$( $(this).attr('href') ).show();
-		$(this).addClass('ui-btn-active');
-		event.preventDefault();
-		return false;
-	});
-	
-	var activeTab = $('#{$this->getId()}_popup_config *[data-role="navbar"] a.ui-btn-active');
-	if (activeTab){
-		activeTab.trigger('click');	
-	} else {
-		
-	}
-});
-
-$(document).on('pagehide', '#{$this->getId()}_popup_config', function(event, ui) {
-	{$this->getId()}_refreshPromotedFilters();
-});
-
-
-{$filters_js}
-
-{$buttons_js}
-			
-			
-$('body').append('\
-<div data-role="page" id="{$this->getId()}_popup_config" data-dialog="true" data-close-btn="right">\
-	<div data-role="header" class="ui-alt-icon">\
-		<h1>Tabelleneinstellungen</h1>\
-	</div>\
-\
-	<div data-role="content">\
-			<div data-role="navbar" class="ui-dialog-header">\
-				<ul>\
-					<li><a href="#{$this->getId()}_popup_filters" class="ui-btn-active">Filter</a></li>\
-					<li><a href="#{$this->getId()}_popup_columns">Spalten</a></li>\
-					<li><a href="#{$this->getId()}_popup_sorting">Sortierung</a></li>\
-				</ul>\
-			</div>\
-			<div id="{$this->getId()}_popup_filters">\
-				{$filters_html}\
-			</div>\
-			<div id="{$this->getId()}_popup_columns">\
-				<fieldset data-role="controlgroup">\
-					{$column_triggers}\
-				</fieldset>\
-			</div>\
-			<div id="{$this->getId()}_popup_sorting">\
-				\
-			</div>\
-\
-			<div style="text-align:right;" class="ui-alt-icon">\
-				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::TIMES)} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a><a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::CHECK)} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->getId()}_table.draw();">OK</a>\
-			</div>\
-\
-	</div><!-- /content -->\
-</div><!-- page-->\
-');
 JS;
         
         return $output;
@@ -402,15 +160,6 @@ JS;
 				    } );
 					";
         } else {
-            // Listen for a long tap to open the context menu. Also trigger a click event, but enforce row selection.
-            if ($this->getWidget()->getContextMenuEnabled()) {
-                $output .= "
-				$('#{$this->getId()} tbody').on( 'taphold', 'tr', function (event) {
-					$(this).trigger('click');
-					$(this).addClass('selected');
-					$('#{$this->getId()}_context_menu').popup('open', {x: exfTapCoordinates.X, y: exfTapCoordinates.Y});
-				});";
-            }
             // Select a row on tap. Make sure no other row is selected
             $output .= "
 					$('#{$this->getId()} tbody').on( 'click', 'tr', function (event) {
@@ -471,8 +220,8 @@ HTML;
 				</div>
 				<div class="ui-block-b" style="float: right; text-align: right;">
 					<div data-role="controlgroup" data-type="horizontal" style="float: right;">
-						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->buildJsRefresh()} return false;">Search</a>
-						<a href="#{$this->getId()}_popup_config" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
+						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->buildJsRefresh(false)} return false;">Search</a>
+						<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
 					</div>
 					<div style="margin-right: 90px;">
 						<input id="{$this->getId()}_quickSearch" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
@@ -499,8 +248,8 @@ HTML;
 				<a href="#" id="{$this->getId()}_nextPage" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-navigation-arrow-forward ui-nodisc-icon ui-alt-icon">&gt;</a>
 			</div>
 			<div style="float:right;">
-				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->buildJsRefresh()} return false;">Reload</a>
-				<a href="#{$this->getId()}_popup_config" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
+				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->buildJsRefresh(false)} return false;">Reload</a>
+				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
 			</div>
 			<div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
 				<form>
@@ -571,6 +320,27 @@ JS;
     public function buildJsFilterIndicatorUpdater()
     {
         // TODO
+    }
+    
+    /**
+     *
+     * @param Button[] $buttons
+     * @return string
+     */
+    protected function buildJsContextMenu()
+    {
+        $output = '';
+        // Listen for a long tap to open the context menu. Also trigger a click event, but enforce row selection.
+        if ($this->getWidget()->getContextMenuEnabled()) {
+            $output .= "
+				$('#{$this->getId()} tbody').on( 'taphold', 'tr', function (event) {
+					$(this).trigger('click');
+					$(this).addClass('selected');
+					$('#{$this->getId()}_context_menu').popup('open', {x: exfTapCoordinates.X, y: exfTapCoordinates.Y});
+				});";
+        }
+        
+        return $output;
     }
 }
 ?>

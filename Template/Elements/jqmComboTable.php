@@ -1,10 +1,14 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
+use exface\Core\Widgets\ComboTable;
+
 /**
  * In jQuery Mobile a ComboTable is represented by a filterable UL-list.
  * The code is based on the JQM-example below.
  * jqm example: http://demos.jquerymobile.com/1.4.5/listview-autocomplete-remote/
+ * 
+ * @method ComboTable getWidget()
  *
  * @author Andrej Kabachnik
  *        
@@ -32,6 +36,9 @@ class jqmComboTable extends jqmInput
     {
         /* @var $widget \exface\Core\Widgets\ComboTable */
         $widget = $this->getWidget();
+        
+        $jqm_page_id = ! is_null($jqm_page_id) ? $jqm_page_id : $this->getPageId();
+        
         $output = <<<JS
 		
 $(document).on('pagecreate', '#{$jqm_page_id}', function() {
@@ -57,10 +64,10 @@ $(document).on('pagecreate', '#{$jqm_page_id}', function() {
                 },
 				success: function ( response ) {
 					$.each( response.data, function ( i, val ) {
-	                    html += '<li><a href="#" exf-value="' + val.{$widget->getTable()->getMetaObject()->getUidAttributeAlias()} + '">' + val.{$widget->getTable()->getMetaObject()->getLabelAttributeAlias()} + '</a></li>';
+	                    html += '<li><a href="#" exf-value="' + val.{$widget->getValueColumn()->getDataColumnName()} + '">' + val.{$widget->getTextColumn()->getDataColumnName()} + '</a></li>';
 	                	if (response.data.length == 1){
-	                		$('#{$this->getId()}').val(val.{$widget->getTable()->getMetaObject()->getUidAttributeAlias()});
-	                		$("#{$this->getId()}_autocomplete_input").val(val.{$widget->getTable()->getMetaObject()->getLabelAttributeAlias()});
+	                		$('#{$this->getId()}').val(val.{$widget->getValueColumn()->getDataColumnName()});
+	                		$("#{$this->getId()}_autocomplete_input").val(val.{$widget->getTextColumn()->getDataColumnName()});
                 		}
 					});
 	                ul.html( html );

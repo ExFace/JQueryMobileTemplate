@@ -27,7 +27,6 @@ class jqmContainer extends jqmAbstractElement
         foreach ($this->getWidget()->getWidgets() as $subw) {
             $output .= $this->getTemplate()->generateJs($subw, $jqm_page_id) . "\n";
         }
-        ;
         return $output;
     }
 }
