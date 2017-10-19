@@ -87,7 +87,7 @@ class jqmButton extends jqmAbstractElement
     protected function buildJsClickShowWidget(iShowWidget $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
-        if ($action->getPage()->getAliasWithNamespace() != $this->getPageAlias()) {
+        if (strcasecmp($action->getPage()->getAliasWithNamespace(), $this->getPageAlias()) != 0) {
             $output = $this->buildJsRequestDataCollector($action, $input_element) . "
 				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPage()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
