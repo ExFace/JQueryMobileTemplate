@@ -77,7 +77,7 @@ class jqmButton extends jqmAbstractElement
         // The problem is, we would have to fetch the page via AJAX and insert it into the DOM, which
         // would probably mean, that we have to take care of removing it ourselves (to save memory)...
         return $this->buildJsRequestDataCollector($action, $input_element) . "
-					$.mobile.pageContainer.pagecontainer('change', '" . $this->getAjaxUrl() . "&resource=" . $this->getPageAlias() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
+					$.mobile.pageContainer.pagecontainer('change', '" . $this->getAjaxUrl() . "&resource=" . $widget->getPage()->getAliasWithNamespace() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
 					";
     }
 
@@ -87,7 +87,7 @@ class jqmButton extends jqmAbstractElement
     protected function buildJsClickShowWidget(iShowWidget $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
-        if (strcasecmp($action->getPage()->getAliasWithNamespace(), $this->getPageAlias()) != 0) {
+        if (! $action->getPage()->is($widget->getPage())) {
             $output = $this->buildJsRequestDataCollector($action, $input_element) . "
 				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPage()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
