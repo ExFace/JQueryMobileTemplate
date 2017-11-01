@@ -60,7 +60,7 @@ class jqmButton extends jqmAbstractElement
         $action = $this->getAction();
         /* @var $widget \exface\Core\Widgets\Button */
         $widget = $this->getWidget();
-        $icon_classes = ($widget->getIconName() && ! $widget->getHideButtonIcon() ? ' ui-icon-' . $this->buildCssIconClass($widget->getIconName()) : '') . ($widget->getCaption() && ! $widget->getHideButtonText() ? ' ui-btn-icon-left' : ' ui-btn-icon-notext');
+        $icon_classes = ($widget->getIcon() && ! $widget->getHideButtonIcon() ? ' ui-icon-' . $this->buildCssIconClass($widget->getIcon()) : '') . ($widget->getCaption() && ! $widget->getHideButtonText() ? ' ui-btn-icon-left' : ' ui-btn-icon-notext');
         $hidden_class = ($widget->isHidden() ? ' exfHidden' : '');
         $output = '
 				<a href="#" plain="true" ' . $this->generateDataAttributes() . ' class="ui-btn ui-btn-inline ui-corner-all' . $icon_classes . $hidden_class . '" onclick="' . $this->buildJsClickFunctionName() . '();">

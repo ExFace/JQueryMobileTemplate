@@ -191,7 +191,7 @@ JS;
         foreach ($this->getWidget()->getButtons() as $b) {
             /* @var $b \exface\Core\Widgets\Button */
             if (! $b->isHidden() && (! $b->getAction() || $b->getAction()->getInputRowsMin() === 1)) {
-                $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIconName()) . '"><a href="#" onclick="' . $this->getTemplate()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
+                $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIcon()) . '"><a href="#" onclick="' . $this->getTemplate()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
             }
         }
         

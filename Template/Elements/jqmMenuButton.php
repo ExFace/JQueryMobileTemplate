@@ -23,9 +23,9 @@ class jqmMenuButton extends jqmAbstractElement
     {
         $buttons_html = '';
         foreach ($this->getWidget()->getButtons() as $b) {
-            $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIconName()) . '"><a href="#" onclick="' . $this->buildJsButtonFunctionName($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
+            $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIcon()) . '"><a href="#" onclick="' . $this->buildJsButtonFunctionName($b) . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
         }
-        $icon_classes = ($this->getWidget()->getIconName() ? ' ui-icon-' . $this->buildCssIconClass($this->getWidget()->getIconName()) : '') . ($this->getWidget()->getCaption() ? '' : ' ui-btn-icon-notext');
+        $icon_classes = ($this->getWidget()->getIcon() ? ' ui-icon-' . $this->buildCssIconClass($this->getWidget()->getIcon()) : '') . ($this->getWidget()->getCaption() ? '' : ' ui-btn-icon-notext');
         
         $output = <<<HTML
 
