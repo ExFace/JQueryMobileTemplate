@@ -84,7 +84,7 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
         if ($this->jqm_page_id) {
             return $this->jqm_page_id;
         } else {
-            return 'jqm' . $this->getPageId();
+            return 'jqm' . $this->getWorkbench()->getCMS()->getPageIdInCms($this->getWidget()->getPage());
         }
     }
 
@@ -116,7 +116,7 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
      */
     public function getId()
     {
-        return '_' . $this->cleanId($this->getWidget()->getPageId()) . '_' . parent::getId();
+        return '_' . $this->cleanId($this->getJqmPageId()) . '_' . parent::getId();
     }
 }
 ?>
