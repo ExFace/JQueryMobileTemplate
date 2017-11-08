@@ -20,7 +20,7 @@ class jqmComboTable extends jqmInput
 
     function generateHtml()
     {
-        $output = '	<div class="fitem exf_input" title="' . $this->buildHintText() . '">
+        $output = '	<div class="exf-grid-item exf-input" title="' . $this->buildHintText() . '">
 						<label for="' . $this->getId() . '">' . $this->getWidget()->getCaption() . '</label>
 						<input id="' . $this->getId() . '_autocomplete_input"  data-type="search" placeholder="Suchen..." value="' . $this->getWidget()->getValueText() . '" />
 						<input type="hidden"		
