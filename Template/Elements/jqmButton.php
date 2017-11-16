@@ -87,9 +87,9 @@ class jqmButton extends jqmAbstractElement
     protected function buildJsClickShowWidget(iShowWidget $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
-        if (! $action->getPage()->is($widget->getPage())) {
+        if (! $widget->getPage()->is($action->getPageAlias())) {
             $output = $this->buildJsRequestDataCollector($action, $input_element) . "
-				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPage()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
+				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPageAlias()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
         return $output;
     }*/
