@@ -1,7 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Template\Elements;
 
-class jqmInputGroup extends jqmPanel
+class jqmWidgetGroup extends jqmPanel
 {
 
     public function generateHtml()
