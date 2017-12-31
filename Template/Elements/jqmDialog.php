@@ -8,7 +8,7 @@ class jqmDialog extends jqmPanel
     {
         /* @var $widget \exface\Core\Widgets\Dialog */
         $widget = $this->getWidget();
-        if ($widget->getLazyLoading()) {
+        if ($this->isLazyLoading()) {
             return '';
         } else {
             return $this->generateJqmPage();
@@ -18,6 +18,19 @@ class jqmDialog extends jqmPanel
     function generateJs($jqm_page_id = null)
     {
         return '';
+    }
+    
+    /**
+     *
+     * @return boolean
+     */
+    protected function isLazyLoading()
+    {
+        $widget_option = $this->getWidget()->getLazyLoading();
+        if (is_null($widget_option)) {
+            return true;
+        }
+        return $widget_option;
     }
 
     public function generateJqmPage()
