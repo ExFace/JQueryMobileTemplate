@@ -16,13 +16,13 @@ class jqmDataMatrixOld extends jqmDataTable
         return parent::getWidget();
     }
 
-    function generateJs($jqm_page_id = '')
+    function buildJs($jqm_page_id = '')
     {
         $output = '';
         return $output;
     }
 
-    function generateHtml()
+    function buildHtml()
     {
         $rows_html = $this->buildJsDataSource();
         $headers = array();

@@ -4,12 +4,12 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 class jqmBasicElement extends jqmAbstractElement
 {
 
-    function generateHtml()
+    function buildHtml()
     {
         return '';
     }
 
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         return '';
     }

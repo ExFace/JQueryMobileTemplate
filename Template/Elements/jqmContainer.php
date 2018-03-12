@@ -8,7 +8,7 @@ class jqmContainer extends jqmAbstractElement
     
     use JqueryContainerTrait;
 
-    public function generateJs($jqm_page_id = null)
+    public function buildJs($jqm_page_id = null)
     {
         return $this->buildJsForChildren($jqm_page_id);
     }
@@ -16,7 +16,7 @@ class jqmContainer extends jqmAbstractElement
     public function buildJsForChildren($jqm_page_id = null)
     {
         foreach ($this->getWidget()->getChildren() as $subw) {
-            $output .= $this->getTemplate()->generateJs($subw, $jqm_page_id) . "\n";
+            $output .= $this->getTemplate()->buildJs($subw, $jqm_page_id) . "\n";
         }
         ;
         return $output;
@@ -25,7 +25,7 @@ class jqmContainer extends jqmAbstractElement
     public function buildJsForWidgets($jqm_page_id = null)
     {
         foreach ($this->getWidget()->getWidgets() as $subw) {
-            $output .= $this->getTemplate()->generateJs($subw, $jqm_page_id) . "\n";
+            $output .= $this->getTemplate()->buildJs($subw, $jqm_page_id) . "\n";
         }
         return $output;
     }

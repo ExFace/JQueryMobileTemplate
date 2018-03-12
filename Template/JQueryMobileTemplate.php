@@ -20,12 +20,12 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
     /**
      * To generate the JavaScript, jQueryMobile needs to know the page id in addition to the regular parameters for this method
      *
-     * @see AbstractAjaxTemplate::generateJs()
+     * @see AbstractAjaxTemplate::buildJs()
      */
-    function generateJs(\exface\Core\Widgets\AbstractWidget $widget, $jqm_page_id = null)
+    function buildJs(\exface\Core\Widgets\AbstractWidget $widget, $jqm_page_id = null)
     {
         $instance = $this->getElement($widget);
-        return $instance->generateJs($jqm_page_id);
+        return $instance->buildJs($jqm_page_id);
     }
 
     public function processRequest($page_alias = NULL, $widget_id = NULL, $action_alias = NULL, $disable_error_handling = NULL)

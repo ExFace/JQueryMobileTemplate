@@ -37,7 +37,7 @@ class jqmDataTable extends jqmAbstractElement
         $this->getWidget()->getToolbarMain()->setIncludeSearchActions(false);
     }
 
-    public function generateHtml()
+    public function buildHtml()
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
@@ -60,7 +60,7 @@ HTML;
         return $output;
     }
 
-    public function generateJs($jqm_page_id = null)
+    public function buildJs($jqm_page_id = null)
     {
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
@@ -126,7 +126,7 @@ function {$this->getId()}_drawPagination(){
 	
 }
 
-{$this->getTemplate()->getElement($widget->getConfiguratorWidget())->generateJs($jqm_page_id)}
+{$this->getTemplate()->getElement($widget->getConfiguratorWidget())->buildJs($jqm_page_id)}
     
 {$this->buildJsButtons()}
 
@@ -135,7 +135,7 @@ JS;
         return $output;
     }
 
-    public function generateHeaders()
+    public function buildHtmlHeadTags()
     {
         $includes = array();
         // $includes[] = '<link rel="stylesheet" type="text/css" href="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables/media/css/jquery.dataTables.min.css">';

@@ -10,7 +10,7 @@ class jqmInputHidden extends jqmInput
         $this->setElementType('hidden');
     }
 
-    public function generateHtml()
+    public function buildHtml()
     {
         $output = '<input type="hidden" 
 								name="' . $this->getWidget()->getAttributeAlias() . '" 

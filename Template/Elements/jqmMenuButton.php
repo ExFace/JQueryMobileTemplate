@@ -17,9 +17,9 @@ class jqmMenuButton extends jqmAbstractElement
 
     /**
      *
-     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::generateHtml()
+     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::buildHtml()
      */
-    function generateHtml()
+    function buildHtml()
     {
         $buttons_html = '';
         foreach ($this->getWidget()->getButtons() as $b) {
@@ -43,9 +43,9 @@ HTML;
     /**
      * {@inheritdoc}
      *
-     * @see \exface\JQueryMobileTemplate\Template\Elements\jqmAbstractElement::generateJs()
+     * @see \exface\JQueryMobileTemplate\Template\Elements\jqmAbstractElement::buildJs()
      */
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         $output = '';
         foreach ($this->getWidget()->getButtons() as $b) {

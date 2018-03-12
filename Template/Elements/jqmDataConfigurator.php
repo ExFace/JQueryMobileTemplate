@@ -16,11 +16,11 @@ class jqmDataConfigurator extends jqmTabs
 {
     use JqueryDataConfiguratorTrait;
     
-    public function generateHtml(){
+    public function buildHtml(){
         return '';
     }
     
-    public function generateJs($jqm_page_id = null)
+    public function buildJs($jqm_page_id = null)
     {
         $widget = $this->getWidget()->getWidgetConfigured();
         
@@ -38,7 +38,7 @@ class jqmDataConfigurator extends jqmTabs
                 // Skip promoted filters, as they are displayed next to quick search
                 if ($fltr->getVisibility() == EXF_WIDGET_VISIBILITY_PROMOTED)
                     continue;
-                    $filters_html .= $this->getTemplate()->generateHtml($fltr);
+                    $filters_html .= $this->getTemplate()->buildHtml($fltr);
             }
         }
         $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
@@ -100,7 +100,7 @@ $(document).on('pagebeforeshow', '#{$this->getId()}', function(event, ui) {
 	}
 });
 JS;
-		return $output . parent::generateJs($jqm_page_id);
+		return $output . parent::buildJs($jqm_page_id);
     }
 }
 ?>

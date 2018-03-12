@@ -13,11 +13,11 @@ class jqmFilter extends jqmAbstractElement
      *
      * {@inheritdoc}
      *
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::generateJs()
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildJs()
      */
-    function generateJs($jqm_page_id = NULL)
+    function buildJs($jqm_page_id = NULL)
     {
-        return $this->getInputElement()->generateJs($jqm_page_id);
+        return $this->getInputElement()->buildJs($jqm_page_id);
     }
 }
 ?>

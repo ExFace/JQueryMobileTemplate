@@ -12,11 +12,11 @@ use exface\Core\Widgets\Tabs;
  */
 class jqmTabs extends jqmContainer
 {
-    public function generateHtml(){
+    public function buildHtml(){
         $html = '';
         
         foreach ($this->getWidget()->getTabs() as $tab){
-            $html .= $this->getTemplate()->getElement($tab)->generateHtml();
+            $html .= $this->getTemplate()->getElement($tab)->buildHtml();
         }
         
         return $html;

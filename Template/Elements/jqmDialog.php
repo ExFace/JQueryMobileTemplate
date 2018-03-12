@@ -4,7 +4,7 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 class jqmDialog extends jqmPanel
 {
 
-    function generateHtml()
+    function buildHtml()
     {
         /* @var $widget \exface\Core\Widgets\Dialog */
         $widget = $this->getWidget();
@@ -15,7 +15,7 @@ class jqmDialog extends jqmPanel
         }
     }
 
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         return '';
     }

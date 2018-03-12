@@ -4,7 +4,7 @@ namespace exface\JQueryMobileTemplate\Template\Elements;
 class jqmWidgetGroup extends jqmPanel
 {
 
-    public function generateHtml()
+    public function buildHtml()
     {
         $children_html = $this->buildHtmlForChildren();
         

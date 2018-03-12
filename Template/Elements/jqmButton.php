@@ -18,7 +18,7 @@ class jqmButton extends jqmAbstractElement
     
     use JqueryButtonTrait;
 
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         $output = '';
         $hotkey_handlers = array();
@@ -53,9 +53,9 @@ class jqmButton extends jqmAbstractElement
 
     /**
      *
-     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::generateHtml()
+     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::buildHtml()
      */
-    function generateHtml()
+    function buildHtml()
     {
         $action = $this->getAction();
         /* @var $widget \exface\Core\Widgets\Button */

@@ -12,7 +12,7 @@ class jqmInput extends jqmAbstractElement
         $this->setElementType('text');
     }
 
-    public function generateHtml()
+    public function buildHtml()
     {
         $output = '	<div class="exf-grid-item exf-input" title="' . $this->buildHintText() . '">
 						<label for="' . $this->getId() . '">' . $this->getWidget()->getCaption() . '</label>
@@ -27,7 +27,7 @@ class jqmInput extends jqmAbstractElement
         return $output;
     }
 
-    public function generateJs($jqm_page_id = null)
+    public function buildJs($jqm_page_id = null)
     {
         return '';
     }

@@ -10,7 +10,7 @@ class jqmCheckBox extends jqmAbstractElement
         $this->setElementType('checkbox');
     }
 
-    function generateHtml()
+    function buildHtml()
     {
         $output = '	<div class="exf-grid-item exf-input" title="' . $this->buildHintText() . '">
 						<label>' . $this->getWidget()->getCaption() . '</label>
@@ -25,7 +25,7 @@ class jqmCheckBox extends jqmAbstractElement
         return $output;
     }
 
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         return '';
     }

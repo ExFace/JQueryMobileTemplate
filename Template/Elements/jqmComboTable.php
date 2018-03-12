@@ -18,7 +18,7 @@ class jqmComboTable extends jqmInput
 
     private $min_chars_to_search = 1;
 
-    function generateHtml()
+    function buildHtml()
     {
         $output = '	<div class="exf-grid-item exf-input" title="' . $this->buildHintText() . '">
 						<label for="' . $this->getId() . '">' . $this->getWidget()->getCaption() . '</label>
@@ -32,7 +32,7 @@ class jqmComboTable extends jqmInput
         return $output;
     }
 
-    function generateJs($jqm_page_id = null)
+    function buildJs($jqm_page_id = null)
     {
         /* @var $widget \exface\Core\Widgets\ComboTable */
         $widget = $this->getWidget();
