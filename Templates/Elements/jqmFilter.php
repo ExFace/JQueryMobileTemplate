@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Template\Elements;
+namespace exface\JQueryMobileTemplate\Templates\Elements;
 
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryFilterTrait;
 

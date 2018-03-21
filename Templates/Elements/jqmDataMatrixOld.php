@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Template\Elements;
+namespace exface\JQueryMobileTemplate\Templates\Elements;
 
 class jqmDataMatrixOld extends jqmDataTable
 {
@@ -8,7 +8,7 @@ class jqmDataMatrixOld extends jqmDataTable
 
     /**
      *
-     * @see \exface\JQueryMobileTemplate\Template\Elements\jqmAbstractElement::getWidget()
+     * @see \exface\JQueryMobileTemplate\Templates\Elements\jqmAbstractElement::getWidget()
      * @return \exface\Core\Widgets\DataMatrix
      */
     public function getWidget()

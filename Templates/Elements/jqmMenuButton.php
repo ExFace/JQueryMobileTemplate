@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Template\Elements;
+namespace exface\JQueryMobileTemplate\Templates\Elements;
 
 use exface\Core\Widgets\Button;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
@@ -43,7 +43,7 @@ HTML;
     /**
      * {@inheritdoc}
      *
-     * @see \exface\JQueryMobileTemplate\Template\Elements\jqmAbstractElement::buildJs()
+     * @see \exface\JQueryMobileTemplate\Templates\Elements\jqmAbstractElement::buildJs()
      */
     function buildJs($jqm_page_id = null)
     {

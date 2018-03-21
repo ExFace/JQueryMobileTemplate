@@ -20,7 +20,7 @@ class JQueryMobileTemplateApp extends App
     {
         $installer = parent::getInstaller($injected_installer);
         $tplInstaller = new HttpTemplateInstaller($this->getSelector());
-        $tplInstaller->setTemplate(TemplateFactory::createFromString('exface.JQueryMobileTemplate', $this->getWorkbench()));
+        $tplInstaller->setTemplate(TemplateFactory::createFromString('exface.JQueryMobileTemplate.JQueryMobileTemplate', $this->getWorkbench()));
         $installer->addInstaller($tplInstaller);
         return $installer;
     }

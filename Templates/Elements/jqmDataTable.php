@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Template\Elements;
+namespace exface\JQueryMobileTemplate\Templates\Elements;
 
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTablesTrait;
 use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTableTrait;
@@ -138,9 +138,9 @@ JS;
     public function buildHtmlHeadTags()
     {
         $includes = array();
-        // $includes[] = '<link rel="stylesheet" type="text/css" href="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables/media/css/jquery.dataTables.min.css">';
-        // $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables/media/js/jquery.dataTables.min.js"></script>';
-        $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Template/js/DataTables.exface.helpers.js"></script>';
+        // $includes[] = '<link rel="stylesheet" type="text/css" href="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables/media/css/jquery.dataTables.min.css">';
+        // $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables/media/js/jquery.dataTables.min.js"></script>';
+        $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables.exface.helpers.js"></script>';
         
         return $includes;
     }
