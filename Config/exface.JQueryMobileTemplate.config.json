@@ -7,7 +7,6 @@
 	"FORBIDDEN_CHARS_IN_ELEMENT_ID": ["/", "(", ")", "."],
 	"FORBIDDEN_CHARS_IN_FUNCTION_PREFIX": ["-", "."],
 	"DEFAULT_AJAX_URL": "/api/jqm",
-	"DATAGRID_SHOW_FOOTER_BY_DEFAULT": false,
 	
 	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "",
     "ICON_CLASSES.EDIT": "content-create",

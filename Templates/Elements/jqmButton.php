@@ -89,7 +89,7 @@ class jqmButton extends jqmAbstractElement
         $widget = $this->getWidget();
         if (! $widget->getPage()->is($action->getPageAlias())) {
             $output = $this->buildJsRequestDataCollector($action, $input_element) . "
-				 	$.mobile.changePage('" . $this->getTemplate()->createLinkInternal($action->getPageAlias()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
+				 	$.mobile.changePage('" . $this->getTemplate()->buildUrlToPage($action->getPageAlias()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
         return $output;
     }*/
