@@ -1,19 +1,19 @@
 <?php
 namespace exface\JQueryMobileTemplate\Templates\Elements;
 
-use exface\Core\Widgets\ComboTable;
+use exface\Core\Widgets\InputComboTable;
 
 /**
- * In jQuery Mobile a ComboTable is represented by a filterable UL-list.
+ * In jQuery Mobile a InputComboTable is represented by a filterable UL-list.
  * The code is based on the JQM-example below.
  * jqm example: http://demos.jquerymobile.com/1.4.5/listview-autocomplete-remote/
  * 
- * @method ComboTable getWidget()
+ * @method InputComboTable getWidget()
  *
  * @author Andrej Kabachnik
  *        
  */
-class jqmComboTable extends jqmInput
+class jqmInputComboTable extends jqmInput
 {
 
     private $min_chars_to_search = 1;
@@ -34,7 +34,7 @@ class jqmComboTable extends jqmInput
 
     function buildJs($jqm_page_id = null)
     {
-        /* @var $widget \exface\Core\Widgets\ComboTable */
+        /* @var $widget \exface\Core\Widgets\InputComboTable */
         $widget = $this->getWidget();
         
         $jqm_page_id = ! is_null($jqm_page_id) ? $jqm_page_id : $this->getPageId();

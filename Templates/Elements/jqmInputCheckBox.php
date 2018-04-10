@@ -1,7 +1,7 @@
 <?php
 namespace exface\JQueryMobileTemplate\Templates\Elements;
 
-class jqmCheckBox extends jqmAbstractElement
+class jqmInputCheckBox extends jqmAbstractElement
 {
 
     protected function init()
