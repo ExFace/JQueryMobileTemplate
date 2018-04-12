@@ -73,11 +73,15 @@ class jqmButton extends jqmAbstractElement
     protected function buildJsClickShowDialog(ActionInterface $action, AbstractJqueryElement $input_element)
     {
         $widget = $this->getWidget();
+        $ajaxUrl = $this->getAjaxUrl();
+        if (strpos($ajaxUrl, '?') === false) {
+            $ajaxUrl .= '?';
+        }
         // FIXME the request should be sent via POST to avoid length limitations of GET
         // The problem is, we would have to fetch the page via AJAX and insert it into the DOM, which
         // would probably mean, that we have to take care of removing it ourselves (to save memory)...
         return $this->buildJsRequestDataCollector($action, $input_element) . "
-					$.mobile.pageContainer.pagecontainer('change', '" . $this->getAjaxUrl() . "&resource=" . $widget->getPage()->getAliasWithNamespace() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
+					$.mobile.pageContainer.pagecontainer('change', '" . $ajaxUrl . "&resource=" . $widget->getPage()->getAliasWithNamespace() . "&element=" . $widget->getId() . "&action=" . $widget->getActionAlias() . "&data=' + encodeURIComponent(JSON.stringify(requestData)));
 					";
     }
 

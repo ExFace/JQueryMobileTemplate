@@ -43,6 +43,7 @@ class jqmDataConfigurator extends jqmTabs
         }
         $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
         
+        $refreshScript = str_replace("'", "\'", $this->getTemplate()->getElement($widget)->buildJsRefresh(false));
         
         $output = <<<JS
 $('body').append('\
@@ -73,7 +74,7 @@ $('body').append('\
 \
 			<div style="text-align:right;" class="ui-alt-icon">\
 				<a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::TIMES)} ui-btn-icon-left ui-btn-inline ui-corner-all">Abbrechen</a>\
-                <a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::CHECK)} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$this->getTemplate()->getElement($widget)->buildJsRefresh(false)}">OK</a>\
+                <a href="#" data-rel="back" data-inline="true" class="ui-btn ui-icon-{$this->buildCssIconClass(Icons::CHECK)} ui-btn-icon-left ui-btn-inline ui-corner-all" onclick="{$refreshScript}">OK</a>\
 			</div>\
 \
 	</div><!-- /content -->\
