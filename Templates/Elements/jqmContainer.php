@@ -5,7 +5,6 @@ use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryContainerTrait;
 
 class jqmContainer extends jqmAbstractElement
 {
-    
     use JqueryContainerTrait;
 
     public function buildJs($jqm_page_id = null)
@@ -28,6 +27,16 @@ class jqmContainer extends jqmAbstractElement
             $output .= $this->getTemplate()->buildJs($subw, $jqm_page_id) . "\n";
         }
         return $output;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildHtml()
+     */
+    public function buildHtml()
+    {
+        return $this->buildHtmlForChildren();
     }
 }
 ?>

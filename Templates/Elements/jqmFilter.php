@@ -5,7 +5,6 @@ use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryFilterTrait;
 
 class jqmFilter extends jqmAbstractElement
 {
-    
     use JqueryFilterTrait;
 
     /**
@@ -18,6 +17,16 @@ class jqmFilter extends jqmAbstractElement
     function buildJs($jqm_page_id = NULL)
     {
         return $this->getInputElement()->buildJs($jqm_page_id);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildHtml()
+     */
+    public function buildHtml()
+    {
+        return $this->getInputElement()->buildHtml();
     }
 }
 ?>
