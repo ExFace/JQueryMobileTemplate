@@ -45,17 +45,11 @@ HTML;
      *
      * @see \exface\JQueryMobileTemplate\Templates\Elements\jqmAbstractElement::buildJs()
      */
-    function buildJs($jqm_page_id = null)
+    public function buildJs($jqm_page_id = null)
     {
         $output = '';
         foreach ($this->getWidget()->getButtons() as $b) {
-            if ($js_click_function = $this->getTemplate()->getElement($b)->buildJsClickFunction()) {
-                $output .= "
-					function " . $this->buildJsButtonFunctionName($b) . "(){
-						" . $js_click_function . "
-					}
-					";
-            }
+            $output .= "\n" . $this->getTemplate()->getElement($b)->buildJs($jqm_page_id);
         }
         return $output;
     }
