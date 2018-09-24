@@ -65,13 +65,6 @@ HTML;
         /* @var $widget \exface\Core\Widgets\DataTable */
         $widget = $this->getWidget();
                 
-        // configure pagination
-        if ($widget->getPaginate()) {
-            $paging_options = '"pageLength": ' . (!is_null($widget->getPaginatePageSize()) ? $widget->getPaginatePageSize() : $this->getTemplate()->getConfig()->getOption('WIDGET.DATATABLE.PAGE_SIZE')). ',';
-        } else {
-            $paging_options = '"paging": false,';
-        }
-        
         $output = <<<JS
 var {$this->getId()}_table;
 
