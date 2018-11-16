@@ -50,8 +50,8 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
         
         $data = array();
         $data['data'] = $data_sheet->getRows();
-        $data['recordsFiltered'] = $data_sheet->countRowsAll();
-        $data['recordsTotal'] = $data_sheet->countRowsAll();
+        $data['recordsFiltered'] = $data_sheet->countRowsInDataSource();
+        $data['recordsTotal'] = $data_sheet->countRowsInDataSource();
         $data['footer'] = $data_sheet->getTotalsRows();
         return $data;
     }
