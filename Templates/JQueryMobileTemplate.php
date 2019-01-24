@@ -4,6 +4,8 @@ namespace exface\JQueryMobileTemplate\Templates;
 use exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate;
 use exface\Core\Interfaces\Actions\ActionInterface;
 use exface\Core\Templates\AbstractAjaxTemplate\Middleware\JqueryDataTablesUrlParamsReader;
+use exface\Core\Interfaces\DataSheets\DataSheetInterface;
+use exface\Core\Interfaces\WidgetInterface;
 
 class JQueryMobileTemplate extends AbstractAjaxTemplate
 {
@@ -68,6 +70,16 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
         $middleware = parent::getMiddleware();
         $middleware[] = new JqueryDataTablesUrlParamsReader($this, 'getInputData', 'setInputData');
         return $middleware;
+    }
+    
+    public function buildResponseData(DataSheetInterface $data_sheet, WidgetInterface $widget = null)
+    {
+        $data = array();
+        $data['data'] = $data_sheet->getRows();
+        $data['recordsFiltered'] = $data_sheet->countRowsInDataSource();
+        $data['recordsTotal'] = $data_sheet->countRowsInDataSource();
+        $data['footer'] = $data_sheet->getTotalsRows();
+        return $data;
     }
 }
 ?>
