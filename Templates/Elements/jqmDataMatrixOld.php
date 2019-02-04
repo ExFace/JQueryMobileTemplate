@@ -1,6 +1,8 @@
 <?php
 namespace exface\JQueryMobileTemplate\Templates\Elements;
 
+use exface\Core\Factories\DataSheetFactory;
+
 class jqmDataMatrixOld extends jqmDataTable
 {
 
@@ -67,7 +69,7 @@ class jqmDataMatrixOld extends jqmDataTable
         $result = array();
         
         // create data sheet to fetch data
-        $ds = $exface->data()->createDataSheet($this->getMetaObject());
+        $ds = DataSheetFactory::createFromObject($this->getMetaObject());
         // add columns
         foreach ($widget->getColumns() as $col) {
             $ds->getColumns()->addFromExpression($col->getAttributeAlias(), $col->getDataColumnName(), $col->isHidden());
