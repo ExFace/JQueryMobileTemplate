@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 class jqmDataButton extends jqmButton
 {

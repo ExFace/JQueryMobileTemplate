@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Interfaces\Actions\ActionInterface;
 
@@ -36,7 +36,7 @@ class jqmInput extends jqmAbstractElement
      *
      * {@inheritdoc}
      *
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildJsDataGetter($action, $custom_body_js)
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::buildJsDataGetter($action, $custom_body_js)
      */
     public function buildJsDataGetter(ActionInterface $action = null)
     {

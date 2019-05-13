@@ -1,8 +1,8 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Widgets\Button;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryButtonTrait;
 
 /**
  * generates jQuery Mobile buttons for ExFace
@@ -17,7 +17,7 @@ class jqmMenuButton extends jqmAbstractElement
 
     /**
      *
-     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::buildHtml()
+     * @see \exface\Facades\jeasyui\Widgets\abstractWidget::buildHtml()
      */
     function buildHtml()
     {
@@ -43,20 +43,20 @@ HTML;
     /**
      * {@inheritdoc}
      *
-     * @see \exface\JQueryMobileTemplate\Templates\Elements\jqmAbstractElement::buildJs()
+     * @see \exface\JQueryMobileFacade\Facades\Elements\jqmAbstractElement::buildJs()
      */
     public function buildJs($jqm_page_id = null)
     {
         $output = '';
         foreach ($this->getWidget()->getButtons() as $b) {
-            $output .= "\n" . $this->getTemplate()->getElement($b)->buildJs($jqm_page_id);
+            $output .= "\n" . $this->getFacade()->getElement($b)->buildJs($jqm_page_id);
         }
         return $output;
     }
 
     function buildJsButtonFunctionName(Button $button)
     {
-        return $this->getTemplate()->getElement($button)->buildJsClickFunctionName();
+        return $this->getFacade()->getElement($button)->buildJsClickFunctionName();
     }
 }
 ?>

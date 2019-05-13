@@ -1,7 +1,7 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryFilterTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryFilterTrait;
 
 class jqmFilter extends jqmAbstractElement
 {
@@ -12,7 +12,7 @@ class jqmFilter extends jqmAbstractElement
      *
      * {@inheritdoc}
      *
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildJs()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::buildJs()
      */
     function buildJs($jqm_page_id = NULL)
     {
@@ -22,7 +22,7 @@ class jqmFilter extends jqmAbstractElement
     /**
      * 
      * {@inheritDoc}
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildHtml()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::buildHtml()
      */
     public function buildHtml()
     {

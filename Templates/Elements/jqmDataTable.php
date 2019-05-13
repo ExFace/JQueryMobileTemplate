@@ -1,10 +1,10 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTablesTrait;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataTableTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryDataTablesTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryDataTableTrait;
 use exface\Core\CommonLogic\Constants\Icons;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryToolbarsTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryToolbarsTrait;
 use exface\Core\Widgets\Button;
 use exface\Core\Widgets\MenuButton;
 use exface\Core\Widgets\ButtonGroup;
@@ -119,7 +119,7 @@ function {$this->getId()}_drawPagination(){
 	
 }
 
-{$this->getTemplate()->getElement($widget->getConfiguratorWidget())->buildJs($jqm_page_id)}
+{$this->getFacade()->getElement($widget->getConfiguratorWidget())->buildJs($jqm_page_id)}
     
 {$this->buildJsButtons()}
 
@@ -131,9 +131,9 @@ JS;
     public function buildHtmlHeadTags()
     {
         $includes = array();
-        // $includes[] = '<link rel="stylesheet" type="text/css" href="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables/media/css/jquery.dataTables.min.css">';
-        // $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables/media/js/jquery.dataTables.min.js"></script>';
-        $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileTemplate/Templates/js/DataTables.exface.helpers.js"></script>';
+        // $includes[] = '<link rel="stylesheet" type="text/css" href="exface/vendor/exface/JQueryMobileFacade/Facades/js/DataTables/media/css/jquery.dataTables.min.css">';
+        // $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileFacade/Facades/js/DataTables/media/js/jquery.dataTables.min.js"></script>';
+        $includes[] = '<script type="text/javascript" src="exface/vendor/exface/JQueryMobileFacade/Facades/js/DataTables.exface.helpers.js"></script>';
         
         return $includes;
     }
@@ -184,7 +184,7 @@ JS;
         foreach ($this->getWidget()->getButtons() as $b) {
             /* @var $b \exface\Core\Widgets\Button */
             if (! $b->isHidden() && (! $b->getAction() || $b->getAction()->getInputRowsMin() === 1)) {
-                $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIcon()) . '"><a href="#" onclick="' . $this->getTemplate()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
+                $buttons_html .= '<li data-icon="' . $this->buildCssIconClass($b->getIcon()) . '"><a href="#" onclick="' . $this->getFacade()->getElement($b)->buildJsClickFunctionName() . '(); $(this).parent().parent().parent().popup(\'close\');">' . $b->getCaption() . '</a></li>';
             }
         }
         
@@ -203,6 +203,7 @@ HTML;
     protected function buildHtmlHeader()
     {
         $table_caption = $this->getWidget()->getCaption() ? $this->getWidget()->getCaption() : $this->getMetaObject()->getName();
+        $widget = $this->getWidget();
         
         $output = <<<HTML
 		<form id="{$this->getId()}_quickSearch_form">
@@ -214,10 +215,10 @@ HTML;
 				<div class="ui-block-b" style="float: right; text-align: right;">
 					<div data-role="controlgroup" data-type="horizontal" style="float: right;">
 						<a href="#" data-role="button" data-icon="action-search" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon" onclick="{$this->buildJsRefresh(false)} return false;">Search</a>
-						<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
+						<a href="#{$this->getFacade()->getElement($widget->getConfiguratorWidget())->getId()}" data-role="button" data-icon="action-settings" data-iconpos="notext" data-shadow="false" class="ui-corner-all ui-nodisc-icon ui-alt-icon">Filters & Sorting</a>
 					</div>
 					<div style="margin-right: 90px;">
-						<input id="{$this->getId()}_quickSearch" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
+						<input id="{$this->getFacade()->getElement($widget->getQuickSearchWidget())->getId()}" type="text" data-mini="true" placeholder="Quick search" data-clear-btn="true" />
 					</div>
 				</div>
 			</div>
@@ -242,7 +243,7 @@ HTML;
 			</div>
 			<div style="float:right;">
 				<a href="#" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-navigation-refresh" onclick="{$this->buildJsRefresh(false)} return false;">Reload</a>
-				<a href="#{$this->getTemplate()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
+				<a href="#{$this->getFacade()->getElement($this->getWidget()->getConfiguratorWidget())->getId()}" class="ui-btn ui-btn-inline ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-action-settings">Tabelleneinstellungen</a>
 			</div>
 			<div data-role="popup" id="{$this->getId()}_pagingPopup" style="width:300px; padding:10px;">
 				<form>

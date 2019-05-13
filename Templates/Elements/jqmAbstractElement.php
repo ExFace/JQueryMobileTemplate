@@ -1,8 +1,8 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement;
-use exface\JQueryMobileTemplate\Templates\JQueryMobileTemplate;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement;
+use exface\JQueryMobileFacade\Facades\JQueryMobileFacade;
 
 abstract class jqmAbstractElement extends AbstractJqueryElement
 {
@@ -28,12 +28,12 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
      *
      * {@inheritdoc}
      *
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::getTemplate()
-     * @return JQueryMobileTemplate
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::getFacade()
+     * @return JQueryMobileFacade
      */
-    public function getTemplate()
+    public function getFacade()
     {
-        return parent::getTemplate();
+        return parent::getFacade();
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class jqmAbstractElement extends AbstractJqueryElement
      * DataTable will have the same id for the data table.
      *
      * {@inheritDoc}
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::getId()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::getId()
      */
     public function getId()
     {

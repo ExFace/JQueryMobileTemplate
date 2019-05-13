@@ -1,7 +1,7 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryHtmlTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryHtmlTrait;
 
 class jqmHtml extends jqmInput
 {

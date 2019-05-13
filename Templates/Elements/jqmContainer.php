@@ -1,7 +1,7 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryContainerTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryContainerTrait;
 
 class jqmContainer extends jqmAbstractElement
 {
@@ -15,7 +15,7 @@ class jqmContainer extends jqmAbstractElement
     public function buildJsForChildren($jqm_page_id = null)
     {
         foreach ($this->getWidget()->getChildren() as $subw) {
-            $output .= $this->getTemplate()->buildJs($subw, $jqm_page_id) . "\n";
+            $output .= $this->getFacade()->buildJs($subw, $jqm_page_id) . "\n";
         }
         ;
         return $output;
@@ -24,7 +24,7 @@ class jqmContainer extends jqmAbstractElement
     public function buildJsForWidgets($jqm_page_id = null)
     {
         foreach ($this->getWidget()->getWidgets() as $subw) {
-            $output .= $this->getTemplate()->buildJs($subw, $jqm_page_id) . "\n";
+            $output .= $this->getFacade()->buildJs($subw, $jqm_page_id) . "\n";
         }
         return $output;
     }
@@ -32,7 +32,7 @@ class jqmContainer extends jqmAbstractElement
     /**
      * 
      * {@inheritDoc}
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement::buildHtml()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement::buildHtml()
      */
     public function buildHtml()
     {

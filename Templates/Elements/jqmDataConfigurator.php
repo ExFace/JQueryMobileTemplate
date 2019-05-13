@@ -1,9 +1,9 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Widgets\DataConfigurator;
 use exface\Core\CommonLogic\Constants\Icons;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryDataConfiguratorTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryDataConfiguratorTrait;
 
 /**
  * 
@@ -38,12 +38,12 @@ class jqmDataConfigurator extends jqmTabs
                 // Skip promoted filters, as they are displayed next to quick search
                 if ($fltr->getVisibility() == EXF_WIDGET_VISIBILITY_PROMOTED)
                     continue;
-                    $filters_html .= $this->getTemplate()->buildHtml($fltr);
+                    $filters_html .= $this->getFacade()->buildHtml($fltr);
             }
         }
         $filters_html = trim(preg_replace('/\s+/', ' ', $filters_html));
         
-        $refreshScript = str_replace("'", "\'", $this->getTemplate()->getElement($widget)->buildJsRefresh(false));
+        $refreshScript = str_replace("'", "\'", $this->getFacade()->getElement($widget)->buildJsRefresh(false));
         
         $output = <<<JS
 $('body').append('\

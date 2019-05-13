@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Factories\DataSheetFactory;
 
@@ -10,7 +10,7 @@ class jqmDataMatrixOld extends jqmDataTable
 
     /**
      *
-     * @see \exface\JQueryMobileTemplate\Templates\Elements\jqmAbstractElement::getWidget()
+     * @see \exface\JQueryMobileFacade\Facades\Elements\jqmAbstractElement::getWidget()
      * @return \exface\Core\Widgets\DataMatrix
      */
     public function getWidget()
@@ -57,11 +57,11 @@ class jqmDataMatrixOld extends jqmDataTable
      * It basically transposes the data column (data_column_id) using values of the label column (label_column_id) as new column headers.
      * The other columns remain untouched.
      *
-     * @see \exface\Templates\jeasyui\Widgets\grid::buildJsDataSource()
+     * @see \exface\Facades\jeasyui\Widgets\grid::buildJsDataSource()
      */
     public function buildJsDataSource()
     {
-        $exface = $this->getTemplate()->getWorkbench();
+        $exface = $this->getFacade()->getWorkbench();
         /* @var $widget \exface\Core\Widgets\DataMatrix */
         $widget = $this->getWidget();
         $visible_columns = array();

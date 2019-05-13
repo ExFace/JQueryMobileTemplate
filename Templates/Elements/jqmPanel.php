@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 class jqmPanel extends jqmContainer
 {
@@ -18,7 +18,7 @@ class jqmPanel extends jqmContainer
     {
         $output = '';
         foreach ($this->getWidget()->getButtons() as $btn) {
-            $output .= $this->getTemplate()->buildHtml($btn);
+            $output .= $this->getFacade()->buildHtml($btn);
         }
         
         return $output;
@@ -28,7 +28,7 @@ class jqmPanel extends jqmContainer
     {
         $output = '';
         foreach ($this->getWidget()->getButtons() as $btn) {
-            $output .= $this->getTemplate()->buildJs($btn, $jqm_page_id);
+            $output .= $this->getFacade()->buildJs($btn, $jqm_page_id);
         }
         
         return $output;

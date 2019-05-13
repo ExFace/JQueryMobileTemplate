@@ -1,12 +1,12 @@
 <?php
-namespace exface\JQueryMobileTemplate;
+namespace exface\JQueryMobileFacade;
 
 use exface\Core\Interfaces\InstallerInterface;
-use exface\Core\Templates\AbstractHttpTemplate\HttpTemplateInstaller;
+use exface\Core\Facades\AbstractHttpFacade\HttpFacadeInstaller;
 use exface\Core\CommonLogic\Model\App;
-use exface\Core\Factories\TemplateFactory;
+use exface\Core\Factories\FacadeFactory;
 
-class JQueryMobileTemplateApp extends App
+class JQueryMobileFacadeApp extends App
 {
 
     /**
@@ -19,8 +19,8 @@ class JQueryMobileTemplateApp extends App
     public function getInstaller(InstallerInterface $injected_installer = null)
     {
         $installer = parent::getInstaller($injected_installer);
-        $tplInstaller = new HttpTemplateInstaller($this->getSelector());
-        $tplInstaller->setTemplate(TemplateFactory::createFromString('exface.JQueryMobileTemplate.JQueryMobileTemplate', $this->getWorkbench()));
+        $tplInstaller = new HttpFacadeInstaller($this->getSelector());
+        $tplInstaller->setFacade(FacadeFactory::createFromString('exface.JQueryMobileFacade.JQueryMobileFacade', $this->getWorkbench()));
         $installer->addInstaller($tplInstaller);
         return $installer;
     }

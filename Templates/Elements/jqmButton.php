@@ -1,10 +1,10 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Widgets\DialogButton;
 use exface\Core\Interfaces\Actions\ActionInterface;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\JqueryButtonTrait;
-use exface\Core\Templates\AbstractAjaxTemplate\Elements\AbstractJqueryElement;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\JqueryButtonTrait;
+use exface\Core\Facades\AbstractAjaxFacade\Elements\AbstractJqueryElement;
 use exface\Core\Interfaces\Actions\iShowWidget;
 
 /**
@@ -25,8 +25,8 @@ class jqmButton extends jqmAbstractElement
         
         // Actions with template scripts may contain some helper functions or global variables.
         // Print the here first.
-        if ($this->getAction() && $this->getAction()->implementsInterface('iRunTemplateScript')) {
-            $output .= $this->getAction()->buildScriptHelperFunctions($this->getTemplate());
+        if ($this->getAction() && $this->getAction()->implementsInterface('iRunFacadeScript')) {
+            $output .= $this->getAction()->buildScriptHelperFunctions($this->getFacade());
         }
         
         if ($click = $this->buildJsClickFunction()) {
@@ -53,7 +53,7 @@ class jqmButton extends jqmAbstractElement
 
     /**
      *
-     * @see \exface\Templates\jeasyui\Widgets\abstractWidget::buildHtml()
+     * @see \exface\Facades\jeasyui\Widgets\abstractWidget::buildHtml()
      */
     function buildHtml()
     {
@@ -93,7 +93,7 @@ class jqmButton extends jqmAbstractElement
         $widget = $this->getWidget();
         if (! $widget->getPage()->is($action->getPageAlias())) {
             $output = $this->buildJsRequestDataCollector($action, $input_element) . "
-				 	$.mobile.changePage('" . $this->getTemplate()->buildUrlToPage($action->getPageAlias()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
+				 	$.mobile.changePage('" . $this->getFacade()->buildUrlToPage($action->getPageAlias()) . "?prefill={\"meta_object_id\":\"" . $widget->getMetaObject()->getId() . "\",\"rows\":[{\"" . $widget->getMetaObject()->getUidAttributeAlias() . "\":' + requestData.rows[0]." . $widget->getMetaObject()->getUidAttributeAlias() . " + '}]}');";
         }
         return $output;
     }*/

@@ -1,5 +1,5 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates\Elements;
+namespace exface\JQueryMobileFacade\Facades\Elements;
 
 use exface\Core\Widgets\Tabs;
 
@@ -16,7 +16,7 @@ class jqmTabs extends jqmContainer
         $html = '';
         
         foreach ($this->getWidget()->getTabs() as $tab){
-            $html .= $this->getTemplate()->getElement($tab)->buildHtml();
+            $html .= $this->getFacade()->getElement($tab)->buildHtml();
         }
         
         return $html;

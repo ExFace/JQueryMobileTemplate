@@ -1,6 +1,6 @@
 {
-	"name" : "exface/JQueryMobileTemplate",
-	"description" : "UI Template for the ExFace web application plattform based on jQuery Mobile",
+	"name" : "exface/JQueryMobileFacade",
+	"description" : "UI Facade for the ExFace web application plattform based on jQuery Mobile",
 	"type" : "library",
 	"license" : "GPL-3.0+",
 	"authors" : [{
@@ -10,17 +10,17 @@
 		}
 	],
 	"support" : {
-		"issues" : "https://github.com/exface/JQueryMobileTemplate/issues"
+		"issues" : "https://github.com/exface/JQueryMobileFacade/issues"
 	},
 	"require" : {
 		"exface/core" : "~0.1",
-		"bower-asset/masonry" : "~4",
-		"bower-asset/datatables.net" : "~1.10.12",
-		"bower-asset/datatables.net-dt" : "~1.10.12",
-		"npm-asset/screenfull" : "~3.0"
+		"bower-asset/masonry" : "^4",
+		"bower-asset/datatables.net" : "^1.10.12",
+		"bower-asset/datatables.net-dt" : "^1.10.12",
+		"npm-asset/screenfull" : "^3.0"
 	},
     "autoload": {
-        "psr-4": { "exface\\JQueryMobileTemplate\\": "" },
+        "psr-4": { "exface\\JQueryMobileFacade\\": "" },
         "exclude-from-classmap": [
             "/Config/",
             "/Translations/",

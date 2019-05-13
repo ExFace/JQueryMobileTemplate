@@ -1,13 +1,13 @@
 <?php
-namespace exface\JQueryMobileTemplate\Templates;
+namespace exface\JQueryMobileFacade\Facades;
 
-use exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate;
+use exface\Core\Facades\AbstractAjaxFacade\AbstractAjaxFacade;
 use exface\Core\Interfaces\Actions\ActionInterface;
-use exface\Core\Templates\AbstractAjaxTemplate\Middleware\JqueryDataTablesUrlParamsReader;
+use exface\Core\Facades\AbstractAjaxFacade\Middleware\JqueryDataTablesUrlParamsReader;
 use exface\Core\Interfaces\DataSheets\DataSheetInterface;
 use exface\Core\Interfaces\WidgetInterface;
 
-class JQueryMobileTemplate extends AbstractAjaxTemplate
+class JQueryMobileFacade extends AbstractAjaxFacade
 {
 
     public function init()
@@ -20,7 +20,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
     /**
      * To generate the JavaScript, jQueryMobile needs to know the page id in addition to the regular parameters for this method
      *
-     * @see AbstractAjaxTemplate::buildJs()
+     * @see AbstractAjaxFacade::buildJs()
      */
     public function buildJs(\exface\Core\Widgets\AbstractWidget $widget, $jqm_page_id = null)
     {
@@ -34,7 +34,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
      * 
      * FIXME make it work with API v4
      *
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate::setResponseFromAction()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\AbstractAjaxFacade::setResponseFromAction()
      */
     public function setResponseFromAction(ActionInterface $action)
     {
@@ -50,7 +50,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
     /**
      * 
      * {@inheritDoc}
-     * @see \exface\Core\Interfaces\Templates\HttpTemplateInterface::getUrlRoutePatterns()
+     * @see \exface\Core\Interfaces\Facades\HttpFacadeInterface::getUrlRoutePatterns()
      */
     public function getUrlRoutePatterns() : array
     {
@@ -63,7 +63,7 @@ class JQueryMobileTemplate extends AbstractAjaxTemplate
     /**
      *
      * {@inheritDoc}
-     * @see \exface\Core\Templates\AbstractAjaxTemplate\AbstractAjaxTemplate::getMiddleware()
+     * @see \exface\Core\Facades\AbstractAjaxFacade\AbstractAjaxFacade::getMiddleware()
      */
     protected function getMiddleware() : array
     {
