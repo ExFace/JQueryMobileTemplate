@@ -1,12 +1,12 @@
 {
-	"WIDTH_RELATIVE_UNIT": 400,
-	"WIDTH_DEFAULT": 1,
-	"HEIGHT_RELATIVE_UNIT": 32,
-	"HEIGHT_DEFAULT": 1,
-	"HINT_MAX_CHARS_IN_LINE": 60,
-	"FORBIDDEN_CHARS_IN_ELEMENT_ID": ["/", "(", ")", "."],
-	"FORBIDDEN_CHARS_IN_FUNCTION_PREFIX": ["-", "."],
-	"DEFAULT_AJAX_URL": "/api/jqm",
+	"FACADE.AJAX.BASE_URL": "/api/jqm",
+	"FACADE.AJAX.ACCESS_CONTROL_HEADERS" : {
+		"Access-Control-Allow-Origin": "",
+		"Access-Control-Allow-Credentials": "true",
+		"Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE",
+		"Access-Control-Allow-Headers": "",
+		"Access-Control-Expose-Headers": ""
+	},
 	
 	"ICON_CLASSES.DEFAULT_CLASS_PREFIX": "",
     "ICON_CLASSES.EDIT": "content-create",
@@ -19,7 +19,14 @@
     "ICON_CLASSES.MORE": "navigation-more-horiz",
     "ICON_CLASSES.LINK": "action-input",
     
-    "WIDGET.ALL.DEFAULT_ALIGNMENT": "left",
+    "WIDGET.ALL.WIDTH_RELATIVE_UNIT": 400,
+	"WIDGET.ALL.WIDTH_DEFAULT": 1,
+	"WIDGET.ALL.HEIGHT_RELATIVE_UNIT": 32,
+	"WIDGET.ALL.HEIGHT_DEFAULT": 1,
+	"WIDGET.ALL.HINT_MAX_CHARS_IN_LINE": 60,
+	"WIDGET.ALL.FORBIDDEN_CHARS_IN_ELEMENT_ID": ["/", "(", ")", "."],
+	"WIDGET.ALL.FORBIDDEN_CHARS_IN_FUNCTION_PREFIX": ["-", "."],
+	"WIDGET.ALL.DEFAULT_ALIGNMENT": "left",
 	
 	"WIDGET.CHART.PAGE_SIZE": 20,
     
@@ -35,5 +42,5 @@
     
     "WIDGET.TABS.COLUMNS_BY_DEFAULT": 3,
     
-    "JAVASCRIPT_DEBUG_LEVEL": 0
+    "FACADE.JAVASCRIPT_DEBUG_LEVEL": 0
 }
